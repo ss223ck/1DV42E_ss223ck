@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SchemaApplicationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Activity">
+    <Key>
+      <PropertyRef Name="ActivityID" />
+    </Key>
+    <Property Name="ActivityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WeekDayID" Type="Int32" Nullable="false" />
+    <Property Name="StartDate" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="EndDate" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="ActivityDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ActivityName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="WeekDay" Relationship="Self.FK_Activity_WeekDay" FromRole="Activity" ToRole="WeekDay" />
+  </EntityType>
+  <EntityType Name="WeekDay">
+    <Key>
+      <PropertyRef Name="WeekDayID" />
+    </Key>
+    <Property Name="WeekDayID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Day" Type="String" MaxLength="9" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Activities" Relationship="Self.FK_Activity_WeekDay" FromRole="WeekDay" ToRole="Activity" />
+  </EntityType>
+  <Association Name="FK_Activity_WeekDay">
+    <End Role="WeekDay" Type="Self.WeekDay" Multiplicity="1" />
+    <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekDay">
+        <PropertyRef Name="WeekDayID" />
+      </Principal>
+      <Dependent Role="Activity">
+        <PropertyRef Name="WeekDayID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SchemaApplicationEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Activities" EntityType="Self.Activity" />
+    <EntitySet Name="WeekDays" EntityType="Self.WeekDay" />
+    <AssociationSet Name="FK_Activity_WeekDay" Association="Self.FK_Activity_WeekDay">
+      <End Role="WeekDay" EntitySet="WeekDays" />
+      <End Role="Activity" EntitySet="Activities" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

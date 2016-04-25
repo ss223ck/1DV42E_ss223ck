@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Schema_Application.ViewModels.WeekDayViewModel>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Schema</title>
+    @Styles.Render("~/Content/Site.css")
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    
+    <div class="table">
+        @foreach(var dayWeek in Model)
+        {
+            
+            <div class="table-column">
+                <div class="table-head">
+                    <p>@Html.DisplayFor(DayWeek => dayWeek.Day)</p>
+                </div>
+                @foreach(var activity in dayWeek.Activities)
+                {
+                    <div class="table-cell">
+                        <p>@Html.DisplayFor(Activities => activity.Name)</p>
+                        <p>@Html.DisplayFor(Activities => activity.Description)</p>
+                        <p>@Html.DisplayFor(Activities => activity.StartTime)-@Html.DisplayFor(Activities => activity.EndTime)</p>
+                        @Html.ActionLink("Details", "Detail", new { id = activity.ActivityID })
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</body>
+</html>

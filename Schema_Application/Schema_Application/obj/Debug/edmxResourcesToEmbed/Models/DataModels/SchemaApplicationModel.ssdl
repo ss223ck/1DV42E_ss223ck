@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SchemaApplicationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Activity">
+    <Key>
+      <PropertyRef Name="ActivityID" />
+    </Key>
+    <Property Name="ActivityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WeekDayID" Type="int" Nullable="false" />
+    <Property Name="StartDate" Type="time" Precision="7" Nullable="false" />
+    <Property Name="EndDate" Type="time" Precision="7" Nullable="false" />
+    <Property Name="ActivityDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ActivityName" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WeekDay">
+    <Key>
+      <PropertyRef Name="WeekDayID" />
+    </Key>
+    <Property Name="WeekDayID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Day" Type="nvarchar" MaxLength="9" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Activity_WeekDay">
+    <End Role="WeekDay" Type="Self.WeekDay" Multiplicity="1" />
+    <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekDay">
+        <PropertyRef Name="WeekDayID" />
+      </Principal>
+      <Dependent Role="Activity">
+        <PropertyRef Name="WeekDayID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="usp_AddActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema">
+    <Parameter Name="WeekDayID" Type="int" Mode="In" />
+    <Parameter Name="StartDate" Type="time" Mode="In" />
+    <Parameter Name="EndDate" Type="time" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar" Mode="In" />
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="usp_DeleteActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema">
+    <Parameter Name="ActivityID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="usp_GetActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema" />
+  <Function Name="usp_GetSpecificActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema">
+    <Parameter Name="ActivityID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="usp_UpdateActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema">
+    <Parameter Name="ActivityID" Type="int" Mode="In" />
+    <Parameter Name="WeekDayID" Type="int" Mode="In" />
+    <Parameter Name="StartDate" Type="time" Mode="In" />
+    <Parameter Name="EndDate" Type="time" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar" Mode="In" />
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="SchemaApplicationModelStoreContainer">
+    <EntitySet Name="Activity" EntityType="Self.Activity" Schema="applicationSchema" store:Type="Tables" />
+    <EntitySet Name="WeekDay" EntityType="Self.WeekDay" Schema="applicationSchema" store:Type="Tables" />
+    <AssociationSet Name="FK_Activity_WeekDay" Association="Self.FK_Activity_WeekDay">
+      <End Role="WeekDay" EntitySet="WeekDay" />
+      <End Role="Activity" EntitySet="Activity" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

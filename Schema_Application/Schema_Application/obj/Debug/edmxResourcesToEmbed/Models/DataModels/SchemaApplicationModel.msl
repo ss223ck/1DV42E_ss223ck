@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SchemaApplicationModelStoreContainer" CdmEntityContainer="SchemaApplicationEntities">
+    <EntitySetMapping Name="Activities">
+      <EntityTypeMapping TypeName="SchemaApplicationModel.Activity">
+        <MappingFragment StoreEntitySet="Activity">
+          <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
+          <ScalarProperty Name="WeekDayID" ColumnName="WeekDayID" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="ActivityDescription" ColumnName="ActivityDescription" />
+          <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="SchemaApplicationModel.Activity">
+        <ModificationFunctionMapping>
+          <InsertFunction FunctionName="SchemaApplicationModel.Store.usp_AddActivity">
+            <ScalarProperty Name="ActivityName" ParameterName="Name" />
+            <ScalarProperty Name="ActivityDescription" ParameterName="Description" />
+            <ScalarProperty Name="EndDate" ParameterName="EndDate" />
+            <ScalarProperty Name="StartDate" ParameterName="StartDate" />
+            <ScalarProperty Name="WeekDayID" ParameterName="WeekDayID" />
+          </InsertFunction>
+          <UpdateFunction FunctionName="SchemaApplicationModel.Store.usp_UpdateActivity">
+            <ScalarProperty Name="ActivityName" ParameterName="Name" Version="Current" />
+            <ScalarProperty Name="ActivityDescription" ParameterName="Description" Version="Current" />
+            <ScalarProperty Name="EndDate" ParameterName="EndDate" Version="Current" />
+            <ScalarProperty Name="StartDate" ParameterName="StartDate" Version="Current" />
+            <ScalarProperty Name="WeekDayID" ParameterName="WeekDayID" Version="Current" />
+            <ScalarProperty Name="ActivityID" ParameterName="ActivityID" Version="Current" />
+          </UpdateFunction>
+          <DeleteFunction FunctionName="SchemaApplicationModel.Store.usp_DeleteActivity">
+            <ScalarProperty Name="ActivityID" ParameterName="ActivityID" />
+          </DeleteFunction>
+        </ModificationFunctionMapping>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WeekDays">
+      <EntityTypeMapping TypeName="SchemaApplicationModel.WeekDay">
+        <MappingFragment StoreEntitySet="WeekDay">
+          <ScalarProperty Name="WeekDayID" ColumnName="WeekDayID" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
