@@ -7,13 +7,15 @@ namespace Schema_Application.ViewModels
 {
     public class WeekDayViewModel
     {
-        private List<ActivityViewModel> _activities;
-        public string Day{ get; set; }
         
-        public List<ActivityViewModel> Activities
+        private List<ActivitySummeryViewModel> _activitySummeries;
+
+        public int WeekDayId { get; set; }
+        public string Day{ get; set; }
+        public List<ActivitySummeryViewModel> ActivitiySummeries
         {
-            get { return _activities.OrderBy(a => a.StartTime).AsEnumerable().ToList(); }
-            set { _activities = value; }
+            get { return _activitySummeries.OrderBy(a => a.StartTime).AsEnumerable().ToList(); }
+            set { _activitySummeries = value; }
         }
     }
 }

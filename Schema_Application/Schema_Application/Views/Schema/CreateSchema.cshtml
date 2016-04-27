@@ -1,6 +1,12 @@
-﻿
+﻿@model Schema_Application.ViewModels.ActivitySummeryViewModel
+
 @{
     Layout = null;
+    var ajaxOptions = new AjaxOptions
+    {
+        UpdateTargetId = "schemaActivities",
+        
+    };
 }
 
 <!DOCTYPE html>
@@ -12,14 +18,38 @@
 </head>
 <body>
     <div> 
-        @using(@Html.BeginForm())
+        @using (Ajax.BeginForm(ajaxOptions))
         {
             @Html.AntiForgeryToken()
             
             <div class="form">
+                <div id="activity-holder">
+                    
+                </div>
+                <div id="dayOfWeek-holder">
 
+                </div>
+                <div id="hours-holder">
+                    @Html.EditorFor(model => model.ActivityId, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div id="specific-hours-holder">
+
+                </div>
+                <div id="add-activity-holder">
+                    <input type="submit"/>
+                </div>
+                <div class="submit">
+                </div>
             </div>
+            
         }
+        <div id="schemaActivities">
+
+        </div>
     </div>
+    @Scripts.Render("~/Scripts/get.information.js")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/ajax")
+
 </body>
 </html>

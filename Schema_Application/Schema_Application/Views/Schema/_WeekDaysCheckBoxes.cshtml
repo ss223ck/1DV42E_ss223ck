@@ -1,0 +1,6 @@
+﻿@model IEnumerable<Schema_Application.ViewModels.WeekDayViewModel>
+
+@foreach(var day in Model)
+{
+    <label for="dayOfWeek">@day.Day</label> <input type="checkbox" name="dayOfWeek" value="@day.WeekDayId" />
+}

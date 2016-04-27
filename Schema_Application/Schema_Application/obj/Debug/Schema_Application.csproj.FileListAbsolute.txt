@@ -53,3 +53,5 @@ C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema_Applicat
 C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema_Application\obj\Debug\Schema_Application.csprojResolveAssemblyReference.cache
 C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema_Application\obj\Debug\Schema_Application.dll
 C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema_Application\obj\Debug\Schema_Application.pdb
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema_Application\bin\Schema.Domain.dll
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema_Application\bin\Schema.Domain.pdb

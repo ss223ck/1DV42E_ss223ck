@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WP14_ss223ck_SchemaApplicationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Activity">
+    <Key>
+      <PropertyRef Name="ActivityId" />
+    </Key>
+    <Property Name="ActivityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ActivityName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="ActivitySummeries" Relationship="Self.FK_ActivitySummery_Activity" FromRole="Activity" ToRole="ActivitySummery" />
+  </EntityType>
+  <EntityType Name="ActivitySummery">
+    <Key>
+      <PropertyRef Name="ActivitySummeryId" />
+    </Key>
+    <Property Name="ActivitySummeryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WeekDayId" Type="Int32" Nullable="false" />
+    <Property Name="ActivityId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="ActivityDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Activity" Relationship="Self.FK_ActivitySummery_Activity" FromRole="ActivitySummery" ToRole="Activity" />
+    <NavigationProperty Name="WeekDay" Relationship="Self.FK_ActivitySummery_WeekDay" FromRole="ActivitySummery" ToRole="WeekDay" />
+  </EntityType>
+  <EntityType Name="WeekDay">
+    <Key>
+      <PropertyRef Name="WeekDayId" />
+    </Key>
+    <Property Name="WeekDayId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Day" Type="String" MaxLength="9" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="ActivitySummeries" Relationship="Self.FK_ActivitySummery_WeekDay" FromRole="WeekDay" ToRole="ActivitySummery" />
+  </EntityType>
+  <Association Name="FK_ActivitySummery_Activity">
+    <End Role="Activity" Type="Self.Activity" Multiplicity="1" />
+    <End Role="ActivitySummery" Type="Self.ActivitySummery" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activity">
+        <PropertyRef Name="ActivityId" />
+      </Principal>
+      <Dependent Role="ActivitySummery">
+        <PropertyRef Name="ActivityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ActivitySummery_WeekDay">
+    <End Role="WeekDay" Type="Self.WeekDay" Multiplicity="1" />
+    <End Role="ActivitySummery" Type="Self.ActivitySummery" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekDay">
+        <PropertyRef Name="WeekDayId" />
+      </Principal>
+      <Dependent Role="ActivitySummery">
+        <PropertyRef Name="WeekDayId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SchemaApplicationEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Activities" EntityType="Self.Activity" />
+    <EntitySet Name="ActivitySummeries" EntityType="Self.ActivitySummery" />
+    <EntitySet Name="WeekDays" EntityType="Self.WeekDay" />
+    <AssociationSet Name="FK_ActivitySummery_Activity" Association="Self.FK_ActivitySummery_Activity">
+      <End Role="Activity" EntitySet="Activities" />
+      <End Role="ActivitySummery" EntitySet="ActivitySummeries" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ActivitySummery_WeekDay" Association="Self.FK_ActivitySummery_WeekDay">
+      <End Role="WeekDay" EntitySet="WeekDays" />
+      <End Role="ActivitySummery" EntitySet="ActivitySummeries" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

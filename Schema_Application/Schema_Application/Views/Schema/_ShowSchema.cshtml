@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Schema_Application.ViewModels.ActivitySummeryViewModel>
+
+
+<div class="table">
+    @foreach(var activity in Model)
+    {
+        <div class="activity-holder">
+            <p>@Html.DisplayFor(Activities => activity.Name)</p>
+            <p>@Html.DisplayFor(Activities => activity.Description)</p>
+            <p>@Html.DisplayFor(Activities => activity.StartTime)-@Html.DisplayFor(Activities => activity.EndTime)</p>
+        </div>
+    }
+</div>

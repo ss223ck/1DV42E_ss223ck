@@ -1,0 +1,10 @@
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema.Domain\obj\Debug\Schema.Domain.csprojResolveAssemblyReference.cache
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema.Domain\bin\Debug\Schema.Domain.dll.config
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema.Domain\bin\Debug\Schema.Domain.dll
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema.Domain\bin\Debug\Schema.Domain.pdb
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema.Domain\bin\Debug\EntityFramework.dll
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema.Domain\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema.Domain\bin\Debug\EntityFramework.xml
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema.Domain\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema.Domain\obj\Debug\Schema.Domain.dll
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema.Domain\obj\Debug\Schema.Domain.pdb

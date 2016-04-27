@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7d82561674fd4a20823ef22bea3c2142" Name="Diagram1">
+        <EntityTypeShape EntityType="WP14_ss223ck_SchemaApplicationModel.Activity" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WP14_ss223ck_SchemaApplicationModel.ActivitySummery" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="WP14_ss223ck_SchemaApplicationModel.WeekDay" Width="1.5" PointX="1" PointY="4.125" IsExpanded="true" />
+        <AssociationConnector Association="WP14_ss223ck_SchemaApplicationModel.FK_ActivitySummery_Activity" ManuallyRouted="false" />
+        <AssociationConnector Association="WP14_ss223ck_SchemaApplicationModel.FK_ActivitySummery_WeekDay" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

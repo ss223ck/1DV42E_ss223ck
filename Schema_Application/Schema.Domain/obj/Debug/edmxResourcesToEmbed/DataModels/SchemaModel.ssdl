@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WP14_ss223ck_SchemaApplicationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Activity">
+    <Key>
+      <PropertyRef Name="ActivityId" />
+    </Key>
+    <Property Name="ActivityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ActivityName" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ActivitySummery">
+    <Key>
+      <PropertyRef Name="ActivitySummeryId" />
+    </Key>
+    <Property Name="ActivitySummeryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WeekDayId" Type="int" Nullable="false" />
+    <Property Name="ActivityId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="ActivityDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WeekDay">
+    <Key>
+      <PropertyRef Name="WeekDayId" />
+    </Key>
+    <Property Name="WeekDayId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Day" Type="nvarchar" MaxLength="9" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_ActivitySummery_Activity">
+    <End Role="Activity" Type="Self.Activity" Multiplicity="1" />
+    <End Role="ActivitySummery" Type="Self.ActivitySummery" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activity">
+        <PropertyRef Name="ActivityId" />
+      </Principal>
+      <Dependent Role="ActivitySummery">
+        <PropertyRef Name="ActivityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ActivitySummery_WeekDay">
+    <End Role="WeekDay" Type="Self.WeekDay" Multiplicity="1" />
+    <End Role="ActivitySummery" Type="Self.ActivitySummery" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WeekDay">
+        <PropertyRef Name="WeekDayId" />
+      </Principal>
+      <Dependent Role="ActivitySummery">
+        <PropertyRef Name="WeekDayId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="usp_AddActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema">
+    <Parameter Name="WeekDayID" Type="int" Mode="In" />
+    <Parameter Name="StartDate" Type="time" Mode="In" />
+    <Parameter Name="EndDate" Type="time" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar" Mode="In" />
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="usp_AddActivitySummery" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema">
+    <Parameter Name="ActivityId" Type="int" Mode="In" />
+    <Parameter Name="WeekDayId" Type="int" Mode="In" />
+    <Parameter Name="UserId" Type="int" Mode="In" />
+    <Parameter Name="StartTime" Type="time" Mode="In" />
+    <Parameter Name="EndTime" Type="time" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="usp_DeleteActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema">
+    <Parameter Name="ActivityID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="usp_DeleteActivitySummery" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema">
+    <Parameter Name="ActivitySummeryId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="usp_GetActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema" />
+  <Function Name="usp_GetActivitySummery" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema" />
+  <Function Name="usp_GetSpecificActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema">
+    <Parameter Name="ActivityID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="usp_GetSpecificActivitySummery" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema">
+    <Parameter Name="ActivitySummeryId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="usp_UpdateActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema">
+    <Parameter Name="ActivityID" Type="int" Mode="In" />
+    <Parameter Name="WeekDayID" Type="int" Mode="In" />
+    <Parameter Name="StartDate" Type="time" Mode="In" />
+    <Parameter Name="EndDate" Type="time" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar" Mode="In" />
+    <Parameter Name="Name" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="usp_UpdateActivitySummery" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema">
+    <Parameter Name="ActivitySummeryId" Type="int" Mode="In" />
+    <Parameter Name="ActivityId" Type="int" Mode="In" />
+    <Parameter Name="WeekDayId" Type="int" Mode="In" />
+    <Parameter Name="UserId" Type="int" Mode="In" />
+    <Parameter Name="StartTime" Type="time" Mode="In" />
+    <Parameter Name="EndTime" Type="time" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="WP14_ss223ck_SchemaApplicationModelStoreContainer">
+    <EntitySet Name="Activity" EntityType="Self.Activity" Schema="applicationSchema" store:Type="Tables" />
+    <EntitySet Name="ActivitySummery" EntityType="Self.ActivitySummery" Schema="applicationSchema" store:Type="Tables" />
+    <EntitySet Name="WeekDay" EntityType="Self.WeekDay" Schema="applicationSchema" store:Type="Tables" />
+    <AssociationSet Name="FK_ActivitySummery_Activity" Association="Self.FK_ActivitySummery_Activity">
+      <End Role="Activity" EntitySet="Activity" />
+      <End Role="ActivitySummery" EntitySet="ActivitySummery" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ActivitySummery_WeekDay" Association="Self.FK_ActivitySummery_WeekDay">
+      <End Role="WeekDay" EntitySet="WeekDay" />
+      <End Role="ActivitySummery" EntitySet="ActivitySummery" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
