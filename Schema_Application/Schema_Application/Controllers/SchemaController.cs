@@ -98,7 +98,7 @@ namespace Schema_Application.Controllers
                                 };
                     _schemaRepository.CreateActivitySummery(activitySummery);
 
-                    var models = _schemaRepository.GetAllWeekDays();
+                    var models = _schemaRepository.GetUserSpecificWeekDayActivities(1);
                     List<WeekDayViewModel> viewModels = new List<WeekDayViewModel>(7);
                     foreach (var model in models)
                     {
@@ -121,7 +121,6 @@ namespace Schema_Application.Controllers
                 }
                 catch (Exception)
                 {
-                    
                     throw;
                 }
                 
