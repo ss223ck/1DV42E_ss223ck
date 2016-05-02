@@ -1,13 +1,23 @@
-﻿@model IEnumerable<Schema_Application.ViewModels.ActivitySummeryViewModel>
+﻿@model IEnumerable<Schema_Application.ViewModels.WeekDayViewModel>
 
 
 <div class="table">
-    @foreach(var activity in Model)
+    @foreach (var dayWeek in Model)
     {
-        <div class="activity-holder">
-            <p>@Html.DisplayFor(Activities => activity.Name)</p>
-            <p>@Html.DisplayFor(Activities => activity.Description)</p>
-            <p>@Html.DisplayFor(Activities => activity.StartTime)-@Html.DisplayFor(Activities => activity.EndTime)</p>
+
+        <div class="table-column">
+            <div class="table-head">
+                <p>@Html.DisplayFor(DayWeek => dayWeek.Day)</p>
+            </div>
+            @foreach (var activity in dayWeek.ActivitiySummeries)
+            {
+                <div class="table-cell">
+                    <p>@Html.DisplayFor(Activities => activity.Name)</p>
+                    <p>@Html.DisplayFor(Activities => activity.Description)</p>
+                    <p>@Html.DisplayFor(Activities => activity.StartTime)-@Html.DisplayFor(Activities => activity.EndTime)</p>
+                    @Html.ActionLink("Details", "Detail", new { id = activity.ActivitySummeryId })
+                </div>
+            }
         </div>
     }
 </div>

@@ -71,6 +71,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SchemaModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DataModels\usp_GetUserActivitySummery_Result.cs">
+      <DependentUpon>SchemaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModels\WeekDay.cs">
       <DependentUpon>SchemaModel.tt</DependentUpon>
     </Compile>

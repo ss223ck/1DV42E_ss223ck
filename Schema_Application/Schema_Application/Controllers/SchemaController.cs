@@ -16,7 +16,9 @@ namespace Schema_Application.Controllers
         
         public ActionResult Index()
         {
-            var models = _schemaRepository.GetAllWeekDays();
+            //change _schemaRepository.GetUserSpecificWeekDayActivities(1); to the users id
+            //Picks out schedule for specific user
+            var models = _schemaRepository.GetUserSpecificWeekDayActivities(1);
             List<WeekDayViewModel> viewModels = new List<WeekDayViewModel>(7);
             foreach (var model in models)
             {
@@ -78,10 +80,54 @@ namespace Schema_Application.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateSchema(ActivitySummeryViewModel model)
+        public ActionResult CreateSchema(ActivitySummeryViewModel activitySummeryVM)
         {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    ActivitySummery activitySummery = new ActivitySummery()
+                                {
+                                    ActivityId = activitySummeryVM.ActivityId,
+                                    WeekDayId = activitySummeryVM.WeekDayId,
+                                    //ADD tempdata userId
+                                    UserId = 1,
+                                    StartTime = activitySummeryVM.StartTime,
+                                    EndTime = activitySummeryVM.EndTime,
+                                    ActivityDescription = activitySummeryVM.Description
+                                };
+                    _schemaRepository.CreateActivitySummery(activitySummery);
 
-            return PartialView("_hej");
+                    var models = _schemaRepository.GetAllWeekDays();
+                    List<WeekDayViewModel> viewModels = new List<WeekDayViewModel>(7);
+                    foreach (var model in models)
+                    {
+                        viewModels.Add(new WeekDayViewModel
+                        {
+                            Day = model.Day,
+                            ActivitiySummeries = model.ActivitySummeries.Select(item => new ActivitySummeryViewModel()
+                            {
+                                ActivitySummeryId = item.ActivitySummeryId,
+                                ActivityId = item.ActivityId,
+                                WeekDayId = item.WeekDayId,
+                                Name = item.Activity.ActivityName,
+                                StartTime = item.StartTime,
+                                EndTime = item.EndTime,
+                                Description = item.ActivityDescription
+                            }).ToList()
+                        });
+                    }
+                    return PartialView("_ShowSchema", viewModels); 
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+                
+            }
+            //Change this to show error message
+            return PartialView("_ShowSchema"); 
         }
 
         public ActionResult GetActivities()

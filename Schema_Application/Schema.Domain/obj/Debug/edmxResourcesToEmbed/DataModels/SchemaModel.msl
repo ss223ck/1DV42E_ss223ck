@@ -54,5 +54,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="usp_GetUserActivitySummery" FunctionName="WP14_ss223ck_SchemaApplicationModel.Store.usp_GetUserActivitySummery">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WP14_ss223ck_SchemaApplicationModel.usp_GetUserActivitySummery_Result">
+          <ScalarProperty Name="ActivitySummeryId" ColumnName="ActivitySummeryId" />
+          <ScalarProperty Name="WeekDayId" ColumnName="WeekDayId" />
+          <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="ActivityDescription" ColumnName="ActivityDescription" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

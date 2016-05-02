@@ -187,7 +187,6 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ActivitySummeryViewModel.cs" />
     <Compile Include="ViewModels\ActivityViewModel.cs" />
-    <Compile Include="ViewModels\SchemaCombinedViewModels.cs" />
     <Compile Include="ViewModels\WeekDayViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -264,7 +263,6 @@
     <Content Include="Views\Schema\_WeekDaysCheckBoxes.cshtml" />
     <Content Include="Views\Schema\_ShowSchema.cshtml" />
     <Content Include="Views\Schema\create.cshtml" />
-    <Content Include="Views\Schema\_hej.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -79,6 +79,9 @@
   <Function Name="usp_GetSpecificActivitySummery" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema">
     <Parameter Name="ActivitySummeryId" Type="int" Mode="In" />
   </Function>
+  <Function Name="usp_GetUserActivitySummery" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema">
+    <Parameter Name="UserId" Type="int" Mode="In" />
+  </Function>
   <Function Name="usp_UpdateActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema">
     <Parameter Name="ActivityID" Type="int" Mode="In" />
     <Parameter Name="WeekDayID" Type="int" Mode="In" />

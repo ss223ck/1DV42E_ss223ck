@@ -17,26 +17,7 @@
         @Html.ActionLink("Create New", "Create")
     </p>
     
-    <div class="table">
-        @foreach(var dayWeek in Model)
-        {
-            
-            <div class="table-column">
-                <div class="table-head">
-                    <p>@Html.DisplayFor(DayWeek => dayWeek.Day)</p>
-                </div>
-                @foreach(var activity in dayWeek.ActivitiySummeries)
-                {
-                    <div class="table-cell">
-                        <p>@Html.DisplayFor(Activities => activity.Name)</p>
-                        <p>@Html.DisplayFor(Activities => activity.Description)</p>
-                        <p>@Html.DisplayFor(Activities => activity.StartTime)-@Html.DisplayFor(Activities => activity.EndTime)</p>
-                        @Html.ActionLink("Details", "Detail", new { id = activity.ActivitySummeryId })
-                    </div>
-                }
-            </div>
-        }
-    </div>
+    @Html.Partial("_ShowSchema")
     
 </body>
 </html>

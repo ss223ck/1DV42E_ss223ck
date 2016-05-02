@@ -12,7 +12,10 @@ namespace Schema.Domain.Repositories
         IEnumerable<Activity> GetAllActivities();
         Activity GetSpecificActivity(int id);
         ActivitySummery GetSpecificActivitySummery(int id);
+
+        IEnumerable<WeekDay> GetUserSpecificWeekDayActivities(int userId);
         void CreateActivity(Activity activity);
+        void CreateActivitySummery(ActivitySummery activitySummery);
         void UpdateActivity(Activity activity);
         void DeleteActivity(int id);
         IEnumerable<WeekDay> GetAllWeekDays();

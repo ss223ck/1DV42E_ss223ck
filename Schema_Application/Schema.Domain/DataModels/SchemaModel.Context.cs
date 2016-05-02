@@ -12,6 +12,8 @@ namespace Schema.Domain.DataModels
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class SchemaApplicationEntities : DbContext
     {
@@ -28,5 +30,14 @@ namespace Schema.Domain.DataModels
         public virtual DbSet<Activity> Activities { get; set; }
         public virtual DbSet<ActivitySummery> ActivitySummeries { get; set; }
         public virtual DbSet<WeekDay> WeekDays { get; set; }
+    
+        public virtual ObjectResult<usp_GetUserActivitySummery_Result> usp_GetUserActivitySummery(Nullable<int> userId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_GetUserActivitySummery_Result>("usp_GetUserActivitySummery", userIdParameter);
+        }
     }
 }

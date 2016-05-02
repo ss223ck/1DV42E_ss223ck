@@ -7,9 +7,7 @@ namespace Schema_Application.ViewModels
 {
     public class WeekDayViewModel
     {
-        
         private List<ActivitySummeryViewModel> _activitySummeries;
-
         public int WeekDayId { get; set; }
         public string Day{ get; set; }
         public List<ActivitySummeryViewModel> ActivitiySummeries

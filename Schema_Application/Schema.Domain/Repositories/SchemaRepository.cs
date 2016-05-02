@@ -32,10 +32,24 @@ namespace Schema.Domain.Repositories
         {
             return _schemaApplicationEntities.ActivitySummeries.Find(id);
         }
-
+        public IEnumerable<WeekDay> GetUserSpecificWeekDayActivities(int userId)
+        {
+            IEnumerable<WeekDay> weekDays = _schemaApplicationEntities.WeekDays.AsQueryable();
+            
+            foreach(WeekDay day in weekDays)
+            {
+                day.ActivitySummeries = day.ActivitySummeries.Where(a => a.UserId == userId).ToList();
+            }
+            return weekDays;
+        }
         public void CreateActivity(Activity activity)
         {
             throw new NotImplementedException();
+        }
+
+        public void CreateActivitySummery(ActivitySummery activitySummery)
+        {
+            _schemaApplicationEntities.ActivitySummeries.Add(activitySummery);
         }
 
         public void UpdateActivity(Activity activity)
