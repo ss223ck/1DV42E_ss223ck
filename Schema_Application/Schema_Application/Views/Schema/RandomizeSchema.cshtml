@@ -1,0 +1,57 @@
+﻿@model Schema_Application.ViewModels.RandomizeSchemaViewModel
+
+    @{
+        ViewBag.Title = "Randomize Schema";
+        Layout = "~/Views/Shared/_LayoutSchema.cshtml";
+    }
+
+    <h2>RandomizeSchema</h2>
+
+<div>
+    <div class="form-group">
+        <div>
+            <label for="study">Study</label>
+            <input type="radio" name="WorkOrStudy" id="study" value="2"/>
+
+            <label for="work">Work</label>
+            <input type="radio" name="WorkOrStudy" id="work" value="3" />
+        </div>
+        <div>
+            <p>Which days of the week do you work or study</p>
+            @foreach (var weekDay in Model.WeekDays)
+            {
+                <label for="dayOfWeek">@weekDay.Day</label>
+                <input type="checkbox" name="WeekDayId" value="@weekDay.WeekDayId" />
+            }
+            
+        </div>
+        <div>
+            <!--Only for ,-->
+            <label for="StartTime">When do you want to start</label>
+            <input type="datetime" id="StartTime" />
+
+            <label for="StartTime">When do you want to finish</label>
+            <input type="datetime" id="StartTime" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div>
+            <!--Inject dropdown here-->
+        </div>
+        <div>
+            <p>Which days of the week do you work or study</p>
+            @foreach (var weekDay in Model.WeekDays)
+            {
+                <label for="dayOfWeek">@weekDay.Day</label>
+                <input type="checkbox" name="WeekDayId" value="@weekDay.WeekDayId" />
+            }
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+        @Scripts.Render("~/Scripts/randomizeSchema.js")
+        @Scripts.Render("~/bundles/ajax")
+    }

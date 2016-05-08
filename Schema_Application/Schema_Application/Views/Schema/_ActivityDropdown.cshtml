@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Schema_Application.ViewModels.ActivityViewModel>
 
-<select id="activity" name="ActivityId">
+<select id="activity" name="ActivityId" class="form-control">
     @foreach (var activity in Model)
     {
         <option value="@activity.ActivityId">

@@ -1,23 +1,9 @@
-﻿@model IEnumerable<Schema_Application.ViewModels.WeekDayViewModel>
-
+﻿
 @{
-    Layout = null;
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutSchema.cshtml";
 }
 
-<!DOCTYPE html>
+<h2>Your Schema</h2>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Schema</title>
-    @Styles.Render("~/Content/Site.css")
-</head>
-<body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    
-    @Html.Partial("_ShowSchema")
-    
-</body>
-</html>
+@Html.Partial("_ShowSchema")

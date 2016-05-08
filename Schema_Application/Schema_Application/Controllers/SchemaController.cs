@@ -94,7 +94,9 @@ namespace Schema_Application.Controllers
                                     UserId = 1,
                                     StartTime = activitySummeryVM.StartTime,
                                     EndTime = activitySummeryVM.EndTime,
-                                    ActivityDescription = activitySummeryVM.Description
+                                    ActivityDescription = activitySummeryVM.Description,
+                                    Activity = _schemaRepository.GetSpecificActivity(activitySummeryVM.ActivityId),
+                                    WeekDay = _schemaRepository.GetSpecificWeekDay(activitySummeryVM.WeekDayId)
                                 };
                     _schemaRepository.CreateActivitySummery(activitySummery);
 
@@ -121,7 +123,7 @@ namespace Schema_Application.Controllers
                 }
                 catch (Exception)
                 {
-                    throw;
+                     throw;
                 }
                 
             }
@@ -159,6 +161,29 @@ namespace Schema_Application.Controllers
             }
             weekDaysViewModels.TrimExcess();
             return PartialView("_WeekDaysCheckBoxes", weekDaysViewModels.AsEnumerable());
+        }
+
+        public ActionResult RandomizeSchema()
+        {
+            var weekDays = _schemaRepository.GetAllWeekDays();
+            RandomizeSchemaViewModel randomizeSchema = new RandomizeSchemaViewModel();
+
+
+            List<WeekDayViewModel> weekDaysViewModels = new List<WeekDayViewModel>(50);
+
+            foreach (var weekDay in weekDays)
+            {
+                weekDaysViewModels.Add(new WeekDayViewModel()
+                {
+                    WeekDayId = weekDay.WeekDayId,
+                    Day = weekDay.Day
+                });
+            }
+            weekDaysViewModels.TrimExcess();
+
+
+            randomizeSchema.WeekDays = weekDaysViewModels.AsEnumerable();
+            return View("RandomizeSchema", randomizeSchema);
         }
     }
 }

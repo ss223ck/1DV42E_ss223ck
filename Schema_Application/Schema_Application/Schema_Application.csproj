@@ -187,6 +187,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ActivitySummeryViewModel.cs" />
     <Compile Include="ViewModels\ActivityViewModel.cs" />
+    <Compile Include="ViewModels\RandomizeSchemaViewModel.cs" />
     <Compile Include="ViewModels\WeekDayViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -207,9 +208,10 @@
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
+    <Content Include="Scripts\AppSpecificScripts\get-information.js" />
+    <Content Include="Scripts\AppSpecificScripts\create-schema.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\get.information.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="Scripts\jquery-2.2.3.min.map" />
@@ -221,6 +223,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\AppSpecificScripts\randomize-schema.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -255,7 +258,6 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Schema\Index.cshtml" />
     <Content Include="Views\Schema\Show.cshtml" />
     <Content Include="Views\Schema\CreateSchema.cshtml" />
     <Content Include="Views\Schema\Details.cshtml" />
@@ -263,6 +265,12 @@
     <Content Include="Views\Schema\_WeekDaysCheckBoxes.cshtml" />
     <Content Include="Views\Schema\_ShowSchema.cshtml" />
     <Content Include="Views\Schema\create.cshtml" />
+    <Content Include="Views\Shared\_LayoutSchema.cshtml" />
+    <Content Include="Views\Schema\ViewSchema.cshtml" />
+    <Content Include="Views\Schema\Index.cshtml" />
+    <Content Include="Views\Schema\RandomizeSchema.cshtml" />
+    <Content Include="Views\Schema\_WorkAndStudy.cshtml" />
+    <Content Include="Views\Schema\RandomizeSchema2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

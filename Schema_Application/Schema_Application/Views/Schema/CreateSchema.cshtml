@@ -1,7 +1,8 @@
 ﻿@model Schema_Application.ViewModels.ActivitySummeryViewModel
 
 @{
-    Layout = null;
+    ViewBag.Title = "Show schema";
+    Layout = "~/Views/Shared/_LayoutSchema.cshtml";
     var ajaxOptions = new AjaxOptions
     {
         UpdateTargetId = "schemaActivities",
@@ -9,41 +10,34 @@
     };
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>CreateSchema</title>
-</head>
-<body>
     <div> 
         @using (Ajax.BeginForm(ajaxOptions))
         {
             @Html.AntiForgeryToken()
             
             <div class="form">
-                <div id="activity-holder">
+                <div id="activity-holder" class="form-group">
                     
                 </div>
-                <div id="dayOfWeek-holder">
+                <div id="dayOfWeek-holder" class="form-group">
 
                 </div>
-                <div id="hours-holder">
-                    
+                <div id="hours-holder" class="form-group">
+                    <!--Nothing to put in here yet, might remove div-->
                 </div>
-                <div id="specific-hours-holder">
+                <div id="specific-hours-holder" class="form-group">
                     @Html.LabelFor(model => model.StartTime)
-                    @Html.EditorFor(model => model.StartTime)
+                    @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.LabelFor(model => model.EndTime)
-                    @Html.EditorFor(model => model.EndTime)
+                    @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
-                <div id="description-holder">
+                <div id="description-holder" class="form-group">
                     @Html.LabelFor(model => model.Description)
                     @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
-                <div id="add-activity-holder">
-                    <input type="submit"/>
+                <div id="add-activity-holder" class="form-group">
+                    <input type="submit" class="btn btn-default" />
                 </div>
             </div>
             
@@ -52,9 +46,9 @@
 
         </div>
     </div>
-    @Scripts.Render("~/Scripts/get.information.js")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/ajax")
-
-</body>
-</html>
+   
+    @section Scripts{
+        @Scripts.Render("~/Scripts/AppSpecificScripts/get-information.js")
+        @Scripts.Render("~/Scripts/AppSpecificScripts/create-schema.js")
+        @Scripts.Render("~/bundles/ajax")
+    }

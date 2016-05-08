@@ -8,6 +8,9 @@
     padding-left: 15px;
     padding-right: 15px;
 }
+.container{
+    width:1500px;
+}
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
@@ -15,6 +18,8 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/*CSS for schema in _ShowSchema*/
 .table-column{
     float:left;
     width:200px;
@@ -28,4 +33,9 @@ textarea {
 .table-cell{
     border:1px solid black;
     height:200px;
+}
+
+/*Form in CreateSchema.cshtml*/
+.form{
+    margin:30px;
 }
