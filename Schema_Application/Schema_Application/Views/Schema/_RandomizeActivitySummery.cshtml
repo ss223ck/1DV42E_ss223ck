@@ -1,70 +1,32 @@
-﻿@model IList<Schema_Application.ViewModels.RandomizeActivitySummeriesViewModel>
+﻿@model List<Schema_Application.ViewModels.RandomizeActivitySummeriesViewModel>
 
-@for (int i = 0; i < Model.Count(); i++)
-{
-    <div class="randomize-activitysummery">
-        <div class="form">
-            <div id="activity-holder" class="form-group randomize-group">
-                <h3>@Model[i].ActivityName</h3>
-            </div>
-            <div id="dayOfWeek-holder" class="form-group randomize-group">
-                <p>Optional</p>
-                <p>Choose which day of the week you want to workout</p>
-                @Html.Partial("")
-            </div>
-            @if (@Model[i].ActivityId != 2 || @Model[i].ActivityId != 3)
-            {
-                <div id="" class="form-group randomize-group">
-                    <p>Optional</p>
-                    <p>Do you want to @Model[i].ActivityName before you work/study or after you work/study?</p>
 
-                </div>
-            }
-            <div id="hours-holder" class="form-group randomize-group">
+<div class="randomize-activitysummery">
+    <div class="form">
+        <div id="activity-holder" class="form-group randomize-group">
+            <h3>@Model[0].ActivityName</h3>
+        </div>
+        <div id="dayOfWeek-holder" class="form-group randomize-group">
+            <p>Optional</p>
+            <p>Choose which day of the week you want to workout</p>
+        </div>
+        @if (@Model[0].ActivityId != 2 || @Model[0].ActivityId != 3)
+        {
+            <div id="" class="form-group randomize-group">
                 <p>Optional</p>
-                <p>For how long period do you want to do this activity each time</p>
-                @Html.LabelFor(model => model[i].ActivityTime)
-                @Html.EditorFor(model => model[i].ActivityTime)
+                <p>Do you want to @Model[0].ActivityName before you work/study or after you work/study?</p>
+
             </div>
-            <div id="description-holder" class="form-group randomize-group">
-                @Html.LabelFor(model => model[i].Description)
-                @Html.EditorFor(model => model[i].Description, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
+        }
+        <div id="hours-holder" class="form-group randomize-group">
+            <p>Optional</p>
+            <p>For how long period do you want to do this activity each time</p>
+            @Html.LabelFor(model => model[Model[0].CountIndex].ActivityTime)
+            @Html.EditorFor(model => model[Model[0].CountIndex].ActivityTime)
+        </div>
+        <div id="description-holder" class="form-group randomize-group">
+            @Html.LabelFor(model => model[Model[0].CountIndex].Description)
+            @Html.EditorFor(model => model[Model[0].CountIndex].Description, new { htmlAttributes = new { @class = "form-control" } })
         </div>
     </div>
-}
-
-@foreach (var randomActivity in Model)
-{
-    
-    <div class="randomize-activitysummery">
-        <div class="form">
-            <div id="activity-holder" class="form-group randomize-group">
-                <h3>@randomActivity.ActivityName</h3>
-            </div>
-            <div id="dayOfWeek-holder" class="form-group randomize-group">
-                <p>Optional</p>
-                <p>Choose which day of the week you want to workout</p>
-                @Html.Partial("")
-            </div>
-            @if (randomActivity.ActivityId != 2 || randomActivity.ActivityId != 3)
-            {
-                <div id="" class="form-group randomize-group">
-                    <p>Optional</p>
-                    <p>Do you want to @randomActivity.ActivityName before you work/study or after you work/study?</p>
-
-                </div>
-            }
-            <div id="hours-holder" class="form-group randomize-group">
-                <p>Optional</p>
-                <p>For how long period do you want to do this activity each time</p>
-                @Html.LabelFor(model => model.ActivityTime)
-                @Html.EditorFor(model => model.ActivityTime)
-            </div>
-            <div id="description-holder" class="form-group randomize-group">
-                @Html.LabelFor(model => model.Description)
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
-        </div>
-    </div>
-}
+</div>

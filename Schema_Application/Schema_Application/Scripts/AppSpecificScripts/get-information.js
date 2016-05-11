@@ -16,9 +16,9 @@ var GetInformation = {
             url: "/Schema/WeekDaysRadiobuttons/"
         });
     },
-    gatherRandomizeActivityView: function (id) {
+    gatherRandomizeActivityView: function (id, counter) {
         return $.ajax({
-            url: "/Schema/RandomizeActivitySummery/" + id
+            url: "/Schema/RandomizeActivitySummery/" + id + "?counter=" + counter
         });
     }
 }

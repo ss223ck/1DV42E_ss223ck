@@ -13,7 +13,8 @@ namespace Schema_Application.Controllers
     public class SchemaController : Controller
     {
         ISchemaRepository _schemaRepository = new SchemaRepository();
-        
+
+        #region Index
         public ActionResult Index()
         {
             //change _schemaRepository.GetUserSpecificWeekDayActivities(1); to the users id
@@ -40,6 +41,9 @@ namespace Schema_Application.Controllers
             return View("Index", viewModels);
         }
 
+        #endregion
+
+        #region Details
         public ActionResult Detail(int? id)
         {
             if (id.HasValue)
@@ -73,6 +77,9 @@ namespace Schema_Application.Controllers
             }
         }
 
+        #endregion
+
+        #region CreateSchema
         public ActionResult CreateSchema()
         {
             return View();
@@ -131,55 +138,9 @@ namespace Schema_Application.Controllers
             return PartialView("_ShowSchema"); 
         }
 
-        public ActionResult GetActivities()
-        {
-            IEnumerable<Activity> activities = _schemaRepository.GetAllActivities();
-            List<ActivityViewModel> activitiesViewModels = new List<ActivityViewModel>(50);
+        #endregion
 
-            foreach(var activity in activities)
-            {
-                activitiesViewModels.Add(new ActivityViewModel(){
-                    ActivityId = activity.ActivityId,
-                    Name = activity.ActivityName
-                });
-            }
-            activitiesViewModels.TrimExcess();
-            return PartialView("_ActivityDropdown", activitiesViewModels.AsEnumerable());
-        }
-        public ActionResult GetWeekDaysCheckboxes()
-        {
-            IEnumerable<WeekDay> weekDays = _schemaRepository.GetAllWeekDays();
-            List<WeekDayViewModel> weekDaysViewModels = new List<WeekDayViewModel>(50);
-
-            foreach (var weekDay in weekDays)
-            {
-                weekDaysViewModels.Add(new WeekDayViewModel()
-                {
-                    WeekDayId = weekDay.WeekDayId,
-                    Day = weekDay.Day
-                });
-            }
-            weekDaysViewModels.TrimExcess();
-            return PartialView("_WeekDaysCheckBoxes", weekDaysViewModels.AsEnumerable());
-        }
-
-        public ActionResult WeekDaysRadioButtons()
-        {
-            IEnumerable<WeekDay> weekDays = _schemaRepository.GetAllWeekDays();
-            List<WeekDayViewModel> weekDaysViewModels = new List<WeekDayViewModel>(50);
-
-            foreach (var weekDay in weekDays)
-            {
-                weekDaysViewModels.Add(new WeekDayViewModel()
-                {
-                    WeekDayId = weekDay.WeekDayId,
-                    Day = weekDay.Day
-                });
-            }
-            weekDaysViewModels.TrimExcess();
-            return PartialView("_WeekDaysRadioButtons", weekDaysViewModels.AsEnumerable());
-        }
-
+        #region RandomizeSchema
         public ActionResult RandomizeSchema()
         {
             var weekDays = _schemaRepository.GetAllWeekDays();
@@ -204,25 +165,53 @@ namespace Schema_Application.Controllers
         }
         public ActionResult RandomizeSchema2()
         {
-            return View();
+            List<RandomizeActivitySummeriesViewModel> activi = new List<RandomizeActivitySummeriesViewModel> (7);
+            activi.Add(new RandomizeActivitySummeriesViewModel
+            {
+                ActivityId = 2,
+                ActivityName = "träning",
+                ActivityTime = 2,
+                Description = "gymma",
+                WeekDayId = new int[1]
+            });
+            activi.Add(new RandomizeActivitySummeriesViewModel
+            {
+                ActivityId = 3,
+                ActivityName = "Plugg",
+                ActivityTime = 2,
+                Description = "c#",
+                WeekDayId = new int[1]
+            });
+            activi.TrimExcess();
+            return View("RandomizeSchema2", activi);
         }
 
-        [ActionName("POST")]
-        public ActionResult RandomizeSchema2(IList<RandomizeActivitySummeriesViewModel> list)
+        [HttpPost]
+        public ActionResult RandomizeSchema2(List<RandomizeActivitySummeriesViewModel> list)
         {
+            var i = 0;
+            i = i - 1;
             return View();
         }
 
-        public ActionResult RandomizeActivitySummery(int? id)
+        #endregion
+
+        #region partialviews
+        public ActionResult RandomizeActivitySummery(int? id, int counter)
         {
             if(id.HasValue)
             {
                 try
                 {
-                    RandomizeActivitySummeriesViewModel activitySummeryViewModel = new RandomizeActivitySummeriesViewModel();
                     var activity = _schemaRepository.GetSpecificActivity((int)id);
-                    activitySummeryViewModel.ActivityId = activity.ActivityId;
-                    activitySummeryViewModel.ActivityName = activity.ActivityName;
+                    List<RandomizeActivitySummeriesViewModel> activitySummeryViewModel = new List<RandomizeActivitySummeriesViewModel>(1);
+                    activitySummeryViewModel.Add(new RandomizeActivitySummeriesViewModel()
+                    {
+                        ActivityId = activity.ActivityId,
+                        ActivityName = activity.ActivityName,
+                        CountIndex = counter
+                    });
+                    
 
                     return PartialView("_RandomizeActivitySummery", activitySummeryViewModel);
                 }
@@ -234,5 +223,58 @@ namespace Schema_Application.Controllers
 
             return PartialView("_RandomizeActivitySummery");
         }
+
+        public ActionResult GetActivities()
+        {
+            IEnumerable<Activity> activities = _schemaRepository.GetAllActivities();
+            List<ActivityViewModel> activitiesViewModels = new List<ActivityViewModel>(50);
+
+            foreach (var activity in activities)
+            {
+                activitiesViewModels.Add(new ActivityViewModel()
+                {
+                    ActivityId = activity.ActivityId,
+                    Name = activity.ActivityName
+                });
+            }
+            activitiesViewModels.TrimExcess();
+            return PartialView("_ActivityDropdown", activitiesViewModels.AsEnumerable());
+        }
+        public ActionResult GetWeekDaysCheckboxes()
+        {
+            IEnumerable<WeekDay> weekDays = _schemaRepository.GetAllWeekDays();
+            List<WeekDayViewModel> weekDaysViewModels = new List<WeekDayViewModel>(50);
+
+            foreach (var weekDay in weekDays)
+            {
+                weekDaysViewModels.Add(new WeekDayViewModel()
+                {
+                    WeekDayId = weekDay.WeekDayId,
+                    Day = weekDay.Day
+                });
+            }
+            weekDaysViewModels.TrimExcess();
+            return PartialView("_WeekDaysCheckBoxes", weekDaysViewModels.AsEnumerable());
+        }
+
+        
+        public ActionResult WeekDaysRadioButtons()
+        {
+            IEnumerable<WeekDay> weekDays = _schemaRepository.GetAllWeekDays();
+            List<WeekDayViewModel> weekDaysViewModels = new List<WeekDayViewModel>(50);
+
+            foreach (var weekDay in weekDays)
+            {
+                weekDaysViewModels.Add(new WeekDayViewModel()
+                {
+                    WeekDayId = weekDay.WeekDayId,
+                    Day = weekDay.Day
+                });
+            }
+            weekDaysViewModels.TrimExcess();
+            return PartialView("_WeekDaysRadioButtons", weekDaysViewModels.AsEnumerable());
+        }
+
+        #endregion
     }
 }

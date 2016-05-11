@@ -12,13 +12,13 @@ var application = {
     },
     renderActivitySummery: function () {
         var dropdown = document.getElementById("activityDropdown");
-        var htmlHolder = document.getElementById("activity-summeries-holder").innerHTML;
+        var htmlActivityElementsHolder = document.getElementById("activity-summeries-holder");
         var activityId = dropdown.options[dropdown.selectedIndex].value;
 
 
 
-        GetInformation.gatherRandomizeActivityView(activityId).done(function (response) {
-            jQuery("#activity-summeries-holder").html(htmlHolder + response);
+        GetInformation.gatherRandomizeActivityView(activityId, htmlActivityElementsHolder.childElementCount).done(function (response) {
+            jQuery("#activity-summeries-holder").html(htmlActivityElementsHolder.innerHTML + response);
         }).error(function (error) {
             console.log(error);
         });
