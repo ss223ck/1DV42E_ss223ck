@@ -11,7 +11,7 @@ var application = {
         });
     },
     gatherWeekDays: function () {
-        GetInformation.gatherWeekDays().done(function (response) {
+        GetInformation.gatherWeekDaysCheckboxes().done(function (response) {
             jQuery("#dayOfWeek-holder").html(response);
         });
         

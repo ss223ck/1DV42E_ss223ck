@@ -146,7 +146,7 @@ namespace Schema_Application.Controllers
             activitiesViewModels.TrimExcess();
             return PartialView("_ActivityDropdown", activitiesViewModels.AsEnumerable());
         }
-        public ActionResult GetWeekDays()
+        public ActionResult GetWeekDaysCheckboxes()
         {
             IEnumerable<WeekDay> weekDays = _schemaRepository.GetAllWeekDays();
             List<WeekDayViewModel> weekDaysViewModels = new List<WeekDayViewModel>(50);
@@ -161,6 +161,23 @@ namespace Schema_Application.Controllers
             }
             weekDaysViewModels.TrimExcess();
             return PartialView("_WeekDaysCheckBoxes", weekDaysViewModels.AsEnumerable());
+        }
+
+        public ActionResult WeekDaysRadioButtons()
+        {
+            IEnumerable<WeekDay> weekDays = _schemaRepository.GetAllWeekDays();
+            List<WeekDayViewModel> weekDaysViewModels = new List<WeekDayViewModel>(50);
+
+            foreach (var weekDay in weekDays)
+            {
+                weekDaysViewModels.Add(new WeekDayViewModel()
+                {
+                    WeekDayId = weekDay.WeekDayId,
+                    Day = weekDay.Day
+                });
+            }
+            weekDaysViewModels.TrimExcess();
+            return PartialView("_WeekDaysRadioButtons", weekDaysViewModels.AsEnumerable());
         }
 
         public ActionResult RandomizeSchema()
@@ -184,6 +201,38 @@ namespace Schema_Application.Controllers
 
             randomizeSchema.WeekDays = weekDaysViewModels.AsEnumerable();
             return View("RandomizeSchema", randomizeSchema);
+        }
+        public ActionResult RandomizeSchema2()
+        {
+            return View();
+        }
+
+        [ActionName("POST")]
+        public ActionResult RandomizeSchema2(IList<RandomizeActivitySummeriesViewModel> list)
+        {
+            return View();
+        }
+
+        public ActionResult RandomizeActivitySummery(int? id)
+        {
+            if(id.HasValue)
+            {
+                try
+                {
+                    RandomizeActivitySummeriesViewModel activitySummeryViewModel = new RandomizeActivitySummeriesViewModel();
+                    var activity = _schemaRepository.GetSpecificActivity((int)id);
+                    activitySummeryViewModel.ActivityId = activity.ActivityId;
+                    activitySummeryViewModel.ActivityName = activity.ActivityName;
+
+                    return PartialView("_RandomizeActivitySummery", activitySummeryViewModel);
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+
+            return PartialView("_RandomizeActivitySummery");
         }
     }
 }

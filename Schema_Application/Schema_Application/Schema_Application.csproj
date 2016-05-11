@@ -187,6 +187,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ActivitySummeryViewModel.cs" />
     <Compile Include="ViewModels\ActivityViewModel.cs" />
+    <Compile Include="ViewModels\RandomizeActivitySummeriesViewModel.cs" />
     <Compile Include="ViewModels\RandomizeSchemaViewModel.cs" />
     <Compile Include="ViewModels\WeekDayViewModel.cs" />
   </ItemGroup>
@@ -264,13 +265,15 @@
     <Content Include="Views\Schema\_ActivityDropdown.cshtml" />
     <Content Include="Views\Schema\_WeekDaysCheckBoxes.cshtml" />
     <Content Include="Views\Schema\_ShowSchema.cshtml" />
-    <Content Include="Views\Schema\create.cshtml" />
+    <Content Include="Views\Schema\Create.cshtml" />
     <Content Include="Views\Shared\_LayoutSchema.cshtml" />
     <Content Include="Views\Schema\ViewSchema.cshtml" />
     <Content Include="Views\Schema\Index.cshtml" />
     <Content Include="Views\Schema\RandomizeSchema.cshtml" />
     <Content Include="Views\Schema\_WorkAndStudy.cshtml" />
     <Content Include="Views\Schema\RandomizeSchema2.cshtml" />
+    <Content Include="Views\Schema\_RandomizeActivitySummery.cshtml" />
+    <Content Include="Views\Schema\_WeekDaysRadioButtons.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

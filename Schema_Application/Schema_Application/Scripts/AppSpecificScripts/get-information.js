@@ -6,9 +6,19 @@ var GetInformation = {
             url: "/Schema/GetActivities/"
         });
     },
-    gatherWeekDays: function () {
+    gatherWeekDaysCheckboxes: function () {
         return $.ajax({
-            url: "/Schema/GetWeekDays/"
+            url: "/Schema/GetWeekDaysCheckboxes/"
+        });
+    },
+    gatherWeekDaysRadiobuttons: function () {
+        return $.ajax({
+            url: "/Schema/WeekDaysRadiobuttons/"
+        });
+    },
+    gatherRandomizeActivityView: function (id) {
+        return $.ajax({
+            url: "/Schema/RandomizeActivitySummery/" + id
         });
     }
 }

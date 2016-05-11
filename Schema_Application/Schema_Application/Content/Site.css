@@ -39,3 +39,46 @@ textarea {
 .form{
     margin:30px;
 }
+
+
+/*RandomizeSchemaView2*/
+.information-container{
+    border:1px solid black;
+    border-radius:5px;
+    padding:20px;
+    margin-top:20px;
+}
+
+#activity-group-container{
+
+    height:700px;
+}
+#generateSchema{
+    float:right;
+}
+#activity-summeries-holder{
+    overflow-x:auto;
+    max-height:550px;
+    height:550px;
+}
+
+#generate-activity-group-container{
+
+}
+
+#generate-schema-container{
+    margin-bottom:20px;
+    height:40px;
+}
+
+.randomize-activitysummery{
+    border:1px solid black;
+    border-radius:5px;
+    padding:20px;
+    margin:20px;
+}
+
+.randomize-group{
+    border-bottom: 1px solid grey;
+    padding:20px;
+}
