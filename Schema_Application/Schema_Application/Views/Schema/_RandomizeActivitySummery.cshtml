@@ -1,32 +1,31 @@
-﻿@model List<Schema_Application.ViewModels.RandomizeActivitySummeriesViewModel>
-
+﻿@model Schema_Application.ViewModels.RandomizeActivitySummeriesViewModel
 
 <div class="randomize-activitysummery">
     <div class="form">
         <div id="activity-holder" class="form-group randomize-group">
-            <h3>@Model[0].ActivityName</h3>
+            <h3>@Model.ActivityName</h3>
         </div>
         <div id="dayOfWeek-holder" class="form-group randomize-group">
             <p>Optional</p>
             <p>Choose which day of the week you want to workout</p>
         </div>
-        @if (@Model[0].ActivityId != 2 || @Model[0].ActivityId != 3)
+        @if (@Model.ActivityId != 2 || @Model.ActivityId != 3)
         {
             <div id="" class="form-group randomize-group">
                 <p>Optional</p>
-                <p>Do you want to @Model[0].ActivityName before you work/study or after you work/study?</p>
+                <p>Do you want to @Model.ActivityName before you work/study or after you work/study?</p>
 
             </div>
         }
         <div id="hours-holder" class="form-group randomize-group">
             <p>Optional</p>
             <p>For how long period do you want to do this activity each time</p>
-            @Html.LabelFor(model => model[Model[0].CountIndex].ActivityTime)
-            @Html.EditorFor(model => model[Model[0].CountIndex].ActivityTime)
+            @Html.LabelFor(model => model.ActivityTime)
+            @Html.EditorFor(model => model.ActivityTime, new { htmlAttributes = new { @Name = "[" + Model.CountIndex + "].ActivityTime", @class = "form-control" } })
         </div>
         <div id="description-holder" class="form-group randomize-group">
-            @Html.LabelFor(model => model[Model[0].CountIndex].Description)
-            @Html.EditorFor(model => model[Model[0].CountIndex].Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.LabelFor(model => model.Description)
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @Name = "[" + Model.CountIndex + "].Description", @class = "form-control" } })
         </div>
     </div>
 </div>

@@ -187,10 +187,10 @@ namespace Schema_Application.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult RandomizeSchema2(List<RandomizeActivitySummeriesViewModel> list)
         {
-            var i = 0;
-            i = i - 1;
+
             return View();
         }
 
@@ -204,14 +204,12 @@ namespace Schema_Application.Controllers
                 try
                 {
                     var activity = _schemaRepository.GetSpecificActivity((int)id);
-                    List<RandomizeActivitySummeriesViewModel> activitySummeryViewModel = new List<RandomizeActivitySummeriesViewModel>(1);
-                    activitySummeryViewModel.Add(new RandomizeActivitySummeriesViewModel()
+                    RandomizeActivitySummeriesViewModel activitySummeryViewModel = new RandomizeActivitySummeriesViewModel()
                     {
                         ActivityId = activity.ActivityId,
                         ActivityName = activity.ActivityName,
                         CountIndex = counter
-                    });
-                    
+                    };                    
 
                     return PartialView("_RandomizeActivitySummery", activitySummeryViewModel);
                 }
@@ -256,8 +254,6 @@ namespace Schema_Application.Controllers
             weekDaysViewModels.TrimExcess();
             return PartialView("_WeekDaysCheckBoxes", weekDaysViewModels.AsEnumerable());
         }
-
-        
         public ActionResult WeekDaysRadioButtons()
         {
             IEnumerable<WeekDay> weekDays = _schemaRepository.GetAllWeekDays();
