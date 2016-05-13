@@ -25,13 +25,18 @@
                     <li>@Html.ActionLink("Home", "Index", "Schema")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Create Schema", "CreateSchema", "CreateSchema")</li>
+                    <li>@Html.ActionLink("Create Schema", "CreateSchema", "Schema")</li>
+                    <li>@Html.ActionLink("Randomize a schema", "RandomizeSchema", "Schema")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
     <div class="container body-content">
+        <div id="error-message">
+        </div>
+        <div id="success-message">
+        </div>
         @RenderBody()
     </div>
 

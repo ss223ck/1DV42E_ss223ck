@@ -53,9 +53,11 @@ textarea {
 
     height:700px;
 }
+
+/*Button that randomize schemas*/
 #generateSchema{
-    float:right;
 }
+
 #activity-summeries-holder{
     overflow-x:auto;
     max-height:550px;
@@ -81,4 +83,7 @@ textarea {
 .randomize-group{
     border-bottom: 1px solid grey;
     padding:20px;
+}
+.text-information-holder{
+    width:50%;
 }

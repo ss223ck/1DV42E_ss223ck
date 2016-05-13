@@ -143,25 +143,15 @@ namespace Schema_Application.Controllers
         #region RandomizeSchema
         public ActionResult RandomizeSchema()
         {
-            var weekDays = _schemaRepository.GetAllWeekDays();
-            RandomizeSchemaViewModel randomizeSchema = new RandomizeSchemaViewModel();
+            
+            return View("RandomizeSchema");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RandomizeSchema(List<RandomizeActivitySummeriesViewModel> list)
+        {
 
-
-            List<WeekDayViewModel> weekDaysViewModels = new List<WeekDayViewModel>(50);
-
-            foreach (var weekDay in weekDays)
-            {
-                weekDaysViewModels.Add(new WeekDayViewModel()
-                {
-                    WeekDayId = weekDay.WeekDayId,
-                    Day = weekDay.Day
-                });
-            }
-            weekDaysViewModels.TrimExcess();
-
-
-            randomizeSchema.WeekDays = weekDaysViewModels.AsEnumerable();
-            return View("RandomizeSchema", randomizeSchema);
+            return View();
         }
         public ActionResult RandomizeSchema2()
         {
@@ -187,7 +177,7 @@ namespace Schema_Application.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken ]
         public ActionResult RandomizeSchema2(List<RandomizeActivitySummeriesViewModel> list)
         {
 
@@ -241,7 +231,7 @@ namespace Schema_Application.Controllers
         public ActionResult GetWeekDaysCheckboxes()
         {
             IEnumerable<WeekDay> weekDays = _schemaRepository.GetAllWeekDays();
-            List<WeekDayViewModel> weekDaysViewModels = new List<WeekDayViewModel>(50);
+            List<WeekDayViewModel> weekDaysViewModels = new List<WeekDayViewModel>();
 
             foreach (var weekDay in weekDays)
             {
@@ -251,13 +241,12 @@ namespace Schema_Application.Controllers
                     Day = weekDay.Day
                 });
             }
-            weekDaysViewModels.TrimExcess();
             return PartialView("_WeekDaysCheckBoxes", weekDaysViewModels.AsEnumerable());
         }
-        public ActionResult WeekDaysRadioButtons()
+        public ActionResult GetWeekDaysRadioButtons()
         {
             IEnumerable<WeekDay> weekDays = _schemaRepository.GetAllWeekDays();
-            List<WeekDayViewModel> weekDaysViewModels = new List<WeekDayViewModel>(50);
+            List<WeekDayViewModel> weekDaysViewModels = new List<WeekDayViewModel>();
 
             foreach (var weekDay in weekDays)
             {
@@ -267,7 +256,6 @@ namespace Schema_Application.Controllers
                     Day = weekDay.Day
                 });
             }
-            weekDaysViewModels.TrimExcess();
             return PartialView("_WeekDaysRadioButtons", weekDaysViewModels.AsEnumerable());
         }
 

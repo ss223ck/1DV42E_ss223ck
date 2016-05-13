@@ -13,7 +13,7 @@ var GetInformation = {
     },
     gatherWeekDaysRadiobuttons: function () {
         return $.ajax({
-            url: "/Schema/WeekDaysRadiobuttons/"
+            url: "/Schema/GetWeekDaysRadioButtons/"
         });
     },
     gatherRandomizeActivityView: function (id, counter) {
