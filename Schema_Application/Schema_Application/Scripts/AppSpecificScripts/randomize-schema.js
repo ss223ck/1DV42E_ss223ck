@@ -23,10 +23,10 @@ var application = {
             //Need checkboxes for the activity to se which days that person is/not willing to do that activity
             GetInformation.gatherWeekDaysCheckboxes(activitySummeriesIndexCounter).done(function (responseCheckboxes) {
                 checkboxHolder.innerHTML = checkboxHolder.innerHTML + responseCheckboxes;
-            }).error(function (error) {
+            }, function (error) {
                 var i = 0;
             });
-        }).error(function (error) {
+        }, function (error) {
             console.log(error);
         });
     }

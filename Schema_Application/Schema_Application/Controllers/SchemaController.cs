@@ -7,38 +7,22 @@ using System.Web;
 using System.Web.Mvc;
 using Schema.Domain.DataModels;
 using Schema.Domain.Repositories;
+using Schema_Application.Models.BLL;
 
 namespace Schema_Application.Controllers
 {
     public class SchemaController : Controller
     {
         ISchemaRepository _schemaRepository = new SchemaRepository();
+        IConvertationService _convertationRepository = new ConvertationService();
 
         #region Index
         public ActionResult Index()
         {
-            //change _schemaRepository.GetUserSpecificWeekDayActivities(1); to the users id
-            //Picks out schedule for specific user
-            var models = _schemaRepository.GetUserSpecificWeekDayActivities(1);
-            List<WeekDayViewModel> viewModels = new List<WeekDayViewModel>(7);
-            foreach (var model in models)
-            {
-                viewModels.Add(new WeekDayViewModel
-                {
-                    Day = model.Day,
-                    ActivitiySummeries = model.ActivitySummeries.Select(item => new ActivitySummeryViewModel()
-                    {
-                        ActivitySummeryId = item.ActivitySummeryId,
-                        ActivityId = item.ActivityId,
-                        WeekDayId = item.WeekDayId,
-                        Name = item.Activity.ActivityName,
-                        StartTime = item.StartTime,
-                        EndTime = item.EndTime,
-                        Description = item.ActivityDescription
-                    }).ToList()
-                });
-            }
-            return View("Index", viewModels);
+            /*TempData["userID"] = 1;
+            var userID = TempData["userID"];*/
+            int userID = 1;
+            return View("Index", _convertationRepository.GetWeekDayViewModels(userID));
         }
 
         #endregion
@@ -48,27 +32,15 @@ namespace Schema_Application.Controllers
         {
             if (id.HasValue)
             {
-                var activity = _schemaRepository.GetSpecificActivitySummery(id.GetValueOrDefault());
-                if (activity != null)
+                try
                 {
-                    var activityView = new ActivitySummeryViewModel()
-                    {
-                        ActivitySummeryId = activity.ActivitySummeryId,
-                        ActivityId = activity.ActivityId,
-                        WeekDayId = activity.WeekDayId,
-                        Name = activity.Activity.ActivityName,
-                        StartTime = activity.StartTime,
-                        EndTime = activity.EndTime,
-                        Description = activity.ActivityDescription
-                    };
-                    return View("Details", activityView);
+                    return View("Details", _convertationRepository.GetActivityViewModel((int)id));
                 }
-                else
+                catch (Exception)
                 {
-                    TempData["ErrorMessage"] = "The activity doesn't exist";
+                    TempData["ErrorMessage"] = "Something went wrong when trying to show the specific activity";
                     return RedirectToAction("Index");
                 }
-
             }
             else
             {
@@ -87,55 +59,26 @@ namespace Schema_Application.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateSchema(ActivitySummeryViewModel activitySummeryVM)
+        public ActionResult CreateSchema(ActivitySummeryViewModel activitySummeryViewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    ActivitySummery activitySummery = new ActivitySummery()
-                                {
-                                    ActivityId = activitySummeryVM.ActivityId,
-                                    WeekDayId = activitySummeryVM.WeekDayId,
-                                    //ADD tempdata userId
-                                    UserId = 1,
-                                    StartTime = activitySummeryVM.StartTime,
-                                    EndTime = activitySummeryVM.EndTime,
-                                    ActivityDescription = activitySummeryVM.Description,
-                                    Activity = _schemaRepository.GetSpecificActivity(activitySummeryVM.ActivityId),
-                                    WeekDay = _schemaRepository.GetSpecificWeekDay(activitySummeryVM.WeekDayId)
-                                };
-                    _schemaRepository.CreateActivitySummery(activitySummery);
+                    /*var userID = TempData["userID"];*/
+                    int userID = 1;
+                    _convertationRepository.CreateActivitySummery(activitySummeryViewModel);
 
-                    var models = _schemaRepository.GetUserSpecificWeekDayActivities(1);
-                    List<WeekDayViewModel> viewModels = new List<WeekDayViewModel>(7);
-                    foreach (var model in models)
-                    {
-                        viewModels.Add(new WeekDayViewModel
-                        {
-                            Day = model.Day,
-                            ActivitiySummeries = model.ActivitySummeries.Select(item => new ActivitySummeryViewModel()
-                            {
-                                ActivitySummeryId = item.ActivitySummeryId,
-                                ActivityId = item.ActivityId,
-                                WeekDayId = item.WeekDayId,
-                                Name = item.Activity.ActivityName,
-                                StartTime = item.StartTime,
-                                EndTime = item.EndTime,
-                                Description = item.ActivityDescription
-                            }).ToList()
-                        });
-                    }
-                    return PartialView("_ShowSchema", viewModels); 
+                    return PartialView("_ShowSchema", _convertationRepository.GetWeekDayViewModels(userID)); 
                 }
                 catch (Exception)
                 {
-                     throw;
-                }
-                
+                    TempData["ErrorMessage"] = "Something went wrong when trying to create a schema";
+                    return RedirectToAction("Index");
+                }   
             }
-            //Change this to show error message
-            return PartialView("_ShowSchema"); 
+            TempData["ErrorMessage"] = "Something is wrong with the information sent to the server. Please try again!";
+            return PartialView("_CreateSchema"); 
         }
 
         #endregion

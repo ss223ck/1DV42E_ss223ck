@@ -68,6 +68,7 @@ namespace Schema.Domain.Repositories
             throw new NotImplementedException();
         }
 
+        #region Save And Dipose
         public void Save()
         {
             _schemaApplicationEntities.SaveChanges();
@@ -90,6 +91,6 @@ namespace Schema.Domain.Repositories
             }
             this.disposed = true;
         }
-
+        #endregion
     }
 }
