@@ -10,6 +10,7 @@ namespace Schema_Application.ViewModels
         private List<ActivitySummeryViewModel> _activitySummeries;
         public int WeekDayId { get; set; }
         public string Day{ get; set; }
+        public int? Counter { get; set; }
         public List<ActivitySummeryViewModel> ActivitiySummeries
         {
             get { return _activitySummeries.OrderBy(a => a.StartTime).AsEnumerable().ToList(); }

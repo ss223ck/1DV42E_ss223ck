@@ -14,16 +14,17 @@ var application = {
         var dropdown = document.getElementById("activityDropdown");
         var htmlActivityElementsHolder = document.getElementById("activity-summeries-holder");
         var activityId = dropdown.options[dropdown.selectedIndex].value;
+        var activitySummeriesIndexCounter = htmlActivityElementsHolder.childElementCount;
 
-        //Get the acitivitysummery that will generate activitysummeries in the week
-        GetInformation.gatherRandomizeActivityView(activityId, htmlActivityElementsHolder.childElementCount).done(function (response) {
+        GetInformation.gatherRandomizeActivityView(activityId, activitySummeriesIndexCounter).done(function (response) {
             jQuery("#activity-summeries-holder").html(htmlActivityElementsHolder.innerHTML + response);
+            var checkboxHolder = document.getElementById("[" + activitySummeriesIndexCounter + "]dayOfWeek-holder");
 
             //Need checkboxes for the activity to se which days that person is/not willing to do that activity
-            GetInformation.gatherWeekDaysCheckboxes().done(function (response) {
-                console.log();
+            GetInformation.gatherWeekDaysCheckboxes(activitySummeriesIndexCounter).done(function (responseCheckboxes) {
+                checkboxHolder.innerHTML = checkboxHolder.innerHTML + responseCheckboxes;
             }).error(function (error) {
-                console.log();
+                var i = 0;
             });
         }).error(function (error) {
             console.log(error);

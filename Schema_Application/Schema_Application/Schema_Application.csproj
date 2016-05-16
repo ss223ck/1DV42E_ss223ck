@@ -271,7 +271,6 @@
     <Content Include="Views\Schema\Index.cshtml" />
     <Content Include="Views\Schema\RandomizeSchema.cshtml" />
     <Content Include="Views\Schema\_WorkAndStudy.cshtml" />
-    <Content Include="Views\Schema\RandomizeSchema2.cshtml" />
     <Content Include="Views\Schema\_RandomizeActivitySummery.cshtml" />
     <Content Include="Views\Schema\_WeekDaysRadioButtons.cshtml" />
   </ItemGroup>

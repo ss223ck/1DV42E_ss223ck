@@ -5,16 +5,17 @@
         <div id="activity-holder" class="form-group randomize-group">
             <h3>@Model.ActivityName</h3>
         </div>
-        <div id="dayOfWeek-holder" class="form-group randomize-group">
+        <div id="[@Model.CountIndex]dayOfWeek-holder" class="form-group randomize-group">
             <p>Optional</p>
-            <p>Choose which day of the week you want to workout</p>
+            <p>Choose which day of the week you want to @Model.ActivityName</p>
         </div>
-        @if (@Model.ActivityId != 2 || @Model.ActivityId != 3)
+        @if (@Model.ActivityId == 1)
         {
             <div id="" class="form-group randomize-group">
                 <p>Optional</p>
                 <p>Do you want to @Model.ActivityName before you work/study or after you work/study?</p>
-
+                @Html.LabelFor(model => model.WhenWorkout)
+                @Html.CheckBoxFor(model => model.WhenWorkout, new { @Name = "[" + Model.CountIndex + "].WhenWorkout", @class = "form-control" } )
             </div>
         }
         <div id="hours-holder" class="form-group randomize-group">

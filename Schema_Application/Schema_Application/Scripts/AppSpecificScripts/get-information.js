@@ -6,9 +6,9 @@ var GetInformation = {
             url: "/Schema/GetActivities/"
         });
     },
-    gatherWeekDaysCheckboxes: function () {
+    gatherWeekDaysCheckboxes: function (counter) {
         return $.ajax({
-            url: "/Schema/GetWeekDaysCheckboxes/"
+            url: "/Schema/GetWeekDaysCheckboxes/?counterID=" + counter
         });
     },
     gatherWeekDaysRadiobuttons: function () {

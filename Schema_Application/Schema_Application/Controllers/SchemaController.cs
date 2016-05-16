@@ -143,47 +143,15 @@ namespace Schema_Application.Controllers
         #region RandomizeSchema
         public ActionResult RandomizeSchema()
         {
-            
             return View("RandomizeSchema");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult RandomizeSchema(List<RandomizeActivitySummeriesViewModel> list)
         {
-
             return View();
         }
-        public ActionResult RandomizeSchema2()
-        {
-            List<RandomizeActivitySummeriesViewModel> activi = new List<RandomizeActivitySummeriesViewModel> (7);
-            activi.Add(new RandomizeActivitySummeriesViewModel
-            {
-                ActivityId = 2,
-                ActivityName = "träning",
-                ActivityTime = 2,
-                Description = "gymma",
-                WeekDayId = new int[1]
-            });
-            activi.Add(new RandomizeActivitySummeriesViewModel
-            {
-                ActivityId = 3,
-                ActivityName = "Plugg",
-                ActivityTime = 2,
-                Description = "c#",
-                WeekDayId = new int[1]
-            });
-            activi.TrimExcess();
-            return View("RandomizeSchema2", activi);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken ]
-        public ActionResult RandomizeSchema2(List<RandomizeActivitySummeriesViewModel> list)
-        {
-
-            return View();
-        }
-
+        
         #endregion
 
         #region partialviews
@@ -211,7 +179,6 @@ namespace Schema_Application.Controllers
 
             return PartialView("_RandomizeActivitySummery");
         }
-
         public ActionResult GetActivities()
         {
             IEnumerable<Activity> activities = _schemaRepository.GetAllActivities();
@@ -228,7 +195,7 @@ namespace Schema_Application.Controllers
             activitiesViewModels.TrimExcess();
             return PartialView("_ActivityDropdown", activitiesViewModels.AsEnumerable());
         }
-        public ActionResult GetWeekDaysCheckboxes()
+        public ActionResult GetWeekDaysCheckboxes(int? counterID)
         {
             IEnumerable<WeekDay> weekDays = _schemaRepository.GetAllWeekDays();
             List<WeekDayViewModel> weekDaysViewModels = new List<WeekDayViewModel>();
@@ -238,7 +205,8 @@ namespace Schema_Application.Controllers
                 weekDaysViewModels.Add(new WeekDayViewModel()
                 {
                     WeekDayId = weekDay.WeekDayId,
-                    Day = weekDay.Day
+                    Day = weekDay.Day,
+                    Counter = counterID
                 });
             }
             return PartialView("_WeekDaysCheckBoxes", weekDaysViewModels.AsEnumerable());
