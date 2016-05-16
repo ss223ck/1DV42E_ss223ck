@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Schema.Domain.DataModels;
 using Schema.Domain.Repositories;
-using Schema_Application.Models.BLL;
+using Schema_Application.Models.Services;
 
 namespace Schema_Application.Controllers
 {
@@ -49,6 +49,31 @@ namespace Schema_Application.Controllers
             }
         }
 
+        #endregion
+
+        #region Edit
+
+        public ActionResult Edit(int? id)
+        {
+            if (id.HasValue)
+            {
+                try
+                {
+                    return View("Edit", _convertationRepository.GetActivityViewModel((int)id));
+                }
+                catch (Exception)
+                {
+                    TempData["ErrorMessage"] = "Something went wrong when trying to edit the specific activity";
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Something went wrong when trying to edit a specific activity, try again!";
+                return RedirectToAction("Index");
+            }
+            
+        }
         #endregion
 
         #region CreateSchema
@@ -104,70 +129,52 @@ namespace Schema_Application.Controllers
             {
                 try
                 {
-                    var activity = _schemaRepository.GetSpecificActivity((int)id);
-                    RandomizeActivitySummeriesViewModel activitySummeryViewModel = new RandomizeActivitySummeriesViewModel()
-                    {
-                        ActivityId = activity.ActivityId,
-                        ActivityName = activity.ActivityName,
-                        CountIndex = counter
-                    };                    
-
-                    return PartialView("_RandomizeActivitySummery", activitySummeryViewModel);
+                    return PartialView("_RandomizeActivitySummery", _convertationRepository.GetRandomizeActivitySummeryViewModel((int)id, counter));
                 }
                 catch (Exception)
                 {
-
+                    TempData["ErrorMessage"] = "Something went wrong when geting the activity summery";
+                    return RedirectToAction("Index");
                 }
             }
-
             return PartialView("_RandomizeActivitySummery");
         }
         public ActionResult GetActivities()
         {
-            IEnumerable<Activity> activities = _schemaRepository.GetAllActivities();
-            List<ActivityViewModel> activitiesViewModels = new List<ActivityViewModel>(50);
-
-            foreach (var activity in activities)
+            try
             {
-                activitiesViewModels.Add(new ActivityViewModel()
-                {
-                    ActivityId = activity.ActivityId,
-                    Name = activity.ActivityName
-                });
+                return PartialView("_ActivityDropdown", _convertationRepository.GetActivityViewModels());
+            } catch(Exception)
+            {
+                TempData["ErrorMessage"] = "Something went wrong when trying to get det activities";
             }
-            activitiesViewModels.TrimExcess();
-            return PartialView("_ActivityDropdown", activitiesViewModels.AsEnumerable());
+            return null;
         }
         public ActionResult GetWeekDaysCheckboxes(int? counterID)
         {
-            IEnumerable<WeekDay> weekDays = _schemaRepository.GetAllWeekDays();
-            List<WeekDayViewModel> weekDaysViewModels = new List<WeekDayViewModel>();
-
-            foreach (var weekDay in weekDays)
+            if(counterID.HasValue)
             {
-                weekDaysViewModels.Add(new WeekDayViewModel()
+                try
                 {
-                    WeekDayId = weekDay.WeekDayId,
-                    Day = weekDay.Day,
-                    Counter = counterID
-                });
+                    return PartialView("_WeekDaysCheckBoxes", _convertationRepository.GetWeekDayViewModelsForPartial((int)counterID).AsEnumerable());
+                } catch(Exception)
+                {
+                    TempData["ErrorMessage"] = "Something went wrong when trying to get the checkboxes";
+                }
             }
-            return PartialView("_WeekDaysCheckBoxes", weekDaysViewModels.AsEnumerable());
+            return null;
         }
         public ActionResult GetWeekDaysRadioButtons()
         {
-            IEnumerable<WeekDay> weekDays = _schemaRepository.GetAllWeekDays();
-            List<WeekDayViewModel> weekDaysViewModels = new List<WeekDayViewModel>();
-
-            foreach (var weekDay in weekDays)
+            try
             {
-                weekDaysViewModels.Add(new WeekDayViewModel()
-                {
-                    WeekDayId = weekDay.WeekDayId,
-                    Day = weekDay.Day
-                });
+                return PartialView("_WeekDaysRadioButtons", _convertationRepository.GetWeekDayViewModelsForPartial(null).AsEnumerable());
             }
-            return PartialView("_WeekDaysRadioButtons", weekDaysViewModels.AsEnumerable());
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = "Something went wrong when trying to get the checkboxes";
+            }
+            return null;
         }
 
         #endregion

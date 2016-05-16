@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Schema_Application.Models.BLL
+namespace Schema_Application.Models.Services
 {
     public class ConvertationService : IConvertationService
     {
@@ -35,6 +35,22 @@ namespace Schema_Application.Models.BLL
                 });
             }
             return viewModels;
+        }
+        public List<WeekDayViewModel> GetWeekDayViewModelsForPartial(int? counterID)
+        {
+            IEnumerable<WeekDay> weekDays = _schemaRepository.GetAllWeekDays();
+            List<WeekDayViewModel> weekDaysViewModels = new List<WeekDayViewModel>();
+
+            foreach (var weekDay in weekDays)
+            {
+                weekDaysViewModels.Add(new WeekDayViewModel()
+                {
+                    WeekDayId = weekDay.WeekDayId,
+                    Day = weekDay.Day,
+                    Counter = counterID
+                });
+            }
+            return weekDaysViewModels;
         }
         public ActivitySummeryViewModel GetActivityViewModel(int id)
         {
@@ -81,5 +97,80 @@ namespace Schema_Application.Models.BLL
                 throw new Exception("Something went wrong when trying to save the activity summery");
             }
         }
+
+        #region Generate schema
+        public List<WeekDayViewModel> GenerateSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel)
+        {
+            List<WeekDayViewModel> weekDayViewModels = new List<WeekDayViewModel>();
+
+            foreach(RandomizeActivitySummeriesViewModel activitySummeryViewModel in randomizeActivitySummeriesViewModel)
+            {
+                if(activitySummeryViewModel.WeekDayId.Count() == 0)
+                {
+                    //create one activity
+                }else
+                {
+                    foreach(int weekDayID in activitySummeryViewModel.WeekDayId)
+                    {
+                        //create many activities
+                    }
+                }
+            }
+ 	        throw new NotImplementedException();
+        }
+
+        private ActivitySummeryViewModel CreateActivity()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+        public RandomizeActivitySummeriesViewModel GetRandomizeActivitySummeryViewModel(int id, int counter)
+        {
+            try
+            {
+                var activity = _schemaRepository.GetSpecificActivity(id);
+                RandomizeActivitySummeriesViewModel activitySummeryViewModel = new RandomizeActivitySummeriesViewModel()
+                {
+                    ActivityId = activity.ActivityId,
+                    ActivityName = activity.ActivityName,
+                    CountIndex = counter
+                };
+
+                return activitySummeryViewModel;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Something went wrong when trying to get the activity summery");
+            }
+        }
+
+
+        public List<ActivityViewModel> GetActivityViewModels()
+        {
+            try
+            {
+                IEnumerable<Activity> activities = _schemaRepository.GetAllActivities();
+                List<ActivityViewModel> activitiesViewModels = new List<ActivityViewModel>();
+
+                foreach (var activity in activities)
+                {
+                    activitiesViewModels.Add(new ActivityViewModel()
+                    {
+                        ActivityId = activity.ActivityId,
+                        Name = activity.ActivityName
+                    });
+                }
+                activitiesViewModels.TrimExcess();
+                return activitiesViewModels;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Something went wrong when trying to get activity view models");
+            }
+        }
+
+        
+
     }
 }

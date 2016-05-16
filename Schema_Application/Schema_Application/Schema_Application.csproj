@@ -182,9 +182,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\BLL\ConvertationService.cs" />
-    <Compile Include="Models\BLL\IConvertationService.cs" />
+    <Compile Include="Models\Factory\IWhenAcktivity.cs" />
+    <Compile Include="Models\Factory\WhenActivity.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Services\ConvertationService.cs" />
+    <Compile Include="Models\Services\IConvertationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ActivitySummeryViewModel.cs" />
@@ -263,7 +265,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Schema\Show.cshtml" />
     <Content Include="Views\Schema\CreateSchema.cshtml" />
-    <Content Include="Views\Schema\Details.cshtml" />
     <Content Include="Views\Schema\_ActivityDropdown.cshtml" />
     <Content Include="Views\Schema\_WeekDaysCheckBoxes.cshtml" />
     <Content Include="Views\Schema\_ShowSchema.cshtml" />
@@ -275,9 +276,12 @@
     <Content Include="Views\Schema\_WorkAndStudy.cshtml" />
     <Content Include="Views\Schema\_RandomizeActivitySummery.cshtml" />
     <Content Include="Views\Schema\_WeekDaysRadioButtons.cshtml" />
+    <Content Include="Views\Schema\Details.cshtml" />
+    <Content Include="Views\Schema\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\BLL\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

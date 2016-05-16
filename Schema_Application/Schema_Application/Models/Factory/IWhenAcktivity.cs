@@ -1,5 +1,4 @@
 ﻿using Schema.Domain.DataModels;
-using Schema_Application.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Schema_Application.Models.Factory
 {
-    public interface ISchemaFactory
+    public interface IWhenActivity
     {
-        List<ActivitySummery> GenerateSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeryViewModelList);
+        List<TimeSpan> GetTimeSpan(TimeSpan startTime, Activity activity);
     }
 }
