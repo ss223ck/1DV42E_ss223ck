@@ -1,5 +1,6 @@
 ﻿using Schema.Domain.DataModels;
 using Schema.Domain.Repositories;
+using Schema_Application.Models.Factory;
 using Schema_Application.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -101,28 +102,10 @@ namespace Schema_Application.Models.Services
         #region Generate schema
         public List<WeekDayViewModel> GenerateSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel)
         {
-            List<WeekDayViewModel> weekDayViewModels = new List<WeekDayViewModel>();
-
-            foreach(RandomizeActivitySummeriesViewModel activitySummeryViewModel in randomizeActivitySummeriesViewModel)
-            {
-                if(activitySummeryViewModel.WeekDayId.Count() == 0)
-                {
-                    //create one activity
-                }else
-                {
-                    foreach(int weekDayID in activitySummeryViewModel.WeekDayId)
-                    {
-                        //create many activities
-                    }
-                }
-            }
- 	        throw new NotImplementedException();
+            TempLogic tempLogic = new TempLogic(this.GetWeekDayViewModelsForPartial(null));
+            return tempLogic.GenerateSchema(randomizeActivitySummeriesViewModel);
         }
 
-        private ActivitySummeryViewModel CreateActivity()
-        {
-            throw new NotImplementedException();
-        }
 
         #endregion
         public RandomizeActivitySummeriesViewModel GetRandomizeActivitySummeryViewModel(int id, int counter)

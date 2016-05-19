@@ -183,6 +183,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Factory\IWhenAcktivity.cs" />
+    <Compile Include="Models\Factory\TempLogic.cs" />
     <Compile Include="Models\Factory\WhenActivity.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Services\ConvertationService.cs" />

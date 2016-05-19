@@ -115,9 +115,10 @@ namespace Schema_Application.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RandomizeSchema(List<RandomizeActivitySummeriesViewModel> list)
+        public ActionResult RandomizeSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel)
         {
-            return View();
+            var returnvalues = _convertationRepository.GenerateSchema(randomizeActivitySummeriesViewModel);
+            return PartialView("_ShowSchema", returnvalues);
         }
         
         #endregion
