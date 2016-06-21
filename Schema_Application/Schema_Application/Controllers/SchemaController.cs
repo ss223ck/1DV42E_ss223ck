@@ -138,7 +138,7 @@ namespace Schema_Application.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            return PartialView("_RandomizeActivitySummery");
+            return PartialView("_RandomizeActivitySummery", new RandomizeActivitySummeriesViewModel(){ActivityId = id.Value});
         }
         public ActionResult GetActivities()
         {

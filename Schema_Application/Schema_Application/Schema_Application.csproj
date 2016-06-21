@@ -182,7 +182,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Factory\ITimesADay.cs" />
     <Compile Include="Models\Factory\IWhenAcktivity.cs" />
+    <Compile Include="Models\Factory\OnlyOnePerDay.cs" />
+    <Compile Include="Models\Factory\RulesFactory.cs" />
     <Compile Include="Models\Factory\TempLogic.cs" />
     <Compile Include="Models\Factory\WhenActivity.cs" />
     <Compile Include="Models\IdentityModels.cs" />

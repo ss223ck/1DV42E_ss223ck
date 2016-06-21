@@ -5,6 +5,9 @@
         <div id="activity-holder" class="form-group randomize-group">
             <h3>@Model.ActivityName</h3>
         </div>
+        <div id="[@Model.CountIndex]activityID-holder">
+            @Html.HiddenFor(m => m.ActivityId, new { @Name = "[" + @Model.CountIndex + "].ActivityId"} )
+        </div>
         <div id="[@Model.CountIndex]timesAWeek-holder" class="form-group randomize-group">
             <p>Optional</p>
             <p>Choose how many days of the week you want to @Model.ActivityName</p>

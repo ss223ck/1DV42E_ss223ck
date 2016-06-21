@@ -106,7 +106,6 @@ namespace Schema_Application.Models.Services
             return tempLogic.GenerateSchema(randomizeActivitySummeriesViewModel);
         }
 
-
         #endregion
         public RandomizeActivitySummeriesViewModel GetRandomizeActivitySummeryViewModel(int id, int counter)
         {
