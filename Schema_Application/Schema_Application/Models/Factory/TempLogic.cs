@@ -44,11 +44,13 @@ namespace Schema_Application.Models.Factory
         {
             foreach (RandomizeActivitySummeriesViewModel randomActivitySummeryViewModel in randomizeActivitySummeriesViewModel)
             {
+                
                 for (int i = 0; i < randomActivitySummeryViewModel.ActivityTimesCountsInWeek; i++)
                 {
                     ActivitySummeries.Add(CreateActivity(randomActivitySummeryViewModel));
                 }
             }
+
             for (int id = 0; id < WeekDays.Count(); id++)
             {
                 WeekDays[id].ActivitiySummeries = ActivitySummeries.FindAll(x => (x.WeekDayId - 1) == id);
@@ -58,7 +60,6 @@ namespace Schema_Application.Models.Factory
 
         private ActivitySummeryViewModel CreateActivity(RandomizeActivitySummeriesViewModel randomActivitySummeryViewModel)
         {
-            int activityStartTime;
 
             ActivitySummeryViewModel activitySummeryViewModel = new ActivitySummeryViewModel()
             {
@@ -69,33 +70,44 @@ namespace Schema_Application.Models.Factory
                 Name = randomActivitySummeryViewModel.ActivityName,
                 Description = randomActivitySummeryViewModel.Description
             };
-            CreateActivityWeekDayId(randomActivitySummeryViewModel, activitySummeryViewModel);
+            activitySummeryViewModel.WeekDayId = CreateActivityWeekDayId(activitySummeryViewModel, randomActivitySummeryViewModel);
             CreateActivityTimeSpan(activitySummeryViewModel, randomActivitySummeryViewModel);
-            
+
+
             return activitySummeryViewModel;
         }
 
-        private void CreateActivityWeekDayId(RandomizeActivitySummeriesViewModel randomActivitySummeryViewModel, ActivitySummeryViewModel activitySummeryViewModel)
+        private int CreateActivityWeekDayId(ActivitySummeryViewModel activitySummeryViewModel, RandomizeActivitySummeriesViewModel randomActivitySummeryViewModel)
         {
+            int weekDayId;
             do
             {
-                if (randomActivitySummeryViewModel.WeekDayId == null)
+                weekDayId = 0;
+                if (randomActivitySummeryViewModel.WeekDayId != null)
                 {
-                    activitySummeryViewModel.WeekDayId = RandomNumber(1, 8);
-                }
-                else
-                {
-                    foreach (int dayId in randomActivitySummeryViewModel.WeekDayId)
+                    if (randomActivitySummeryViewModel.ActivityTimesCountsInWeek < randomActivitySummeryViewModel.WeekDayId.Count())
                     {
-                        if (!ActivitySummeries.FindAll(x => x.ActivityId == activitySummeryViewModel.ActivityId).
-                                            Exists(x => x.WeekDayId == dayId))
-                        {
-                            activitySummeryViewModel.WeekDayId = dayId;
-                        }
+                        weekDayId = randomActivitySummeryViewModel.WeekDayId[RandomNumber(0, randomActivitySummeryViewModel.WeekDayId.Count())];
                     }
+                    else
+                    {
+                        foreach (int id in randomActivitySummeryViewModel.WeekDayId)
+                        {
+                            if (!ActivitySummeries.FindAll(x => x.ActivityId == activitySummeryViewModel.ActivityId).
+                                           Exists(x => x.WeekDayId == id) && weekDayId != 0)
+                            {
+                                weekDayId = id;
+                            }
+                        }
+                    } 
+                }
+                if(weekDayId == 0)
+                {
+                    weekDayId = RandomNumber(1, 8);
                 }
             } while (ActivitySummeries.FindAll(x => x.ActivityId == activitySummeryViewModel.ActivityId).
-                                       Exists(x => x.WeekDayId == activitySummeryViewModel.WeekDayId));
+                                       Exists(x => x.WeekDayId == weekDayId));
+            return weekDayId;
         }
 
         private void CreateActivityTimeSpan(ActivitySummeryViewModel activitySummeryViewModel, RandomizeActivitySummeriesViewModel randomActivitySummeryViewModel)
