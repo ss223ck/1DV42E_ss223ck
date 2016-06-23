@@ -1,9 +1,10 @@
 ﻿"use strict"
 
-var application = {
+var CreateSchema = {
     init: function () {
-        application.gatherActivities();
-        application.gatherWeekDays();
+        CreateSchema.gatherActivities();
+        CreateSchema.gatherWeekDays();
+        CreateSchema.gatherSchema();
     },
     gatherActivities: function () {
         GetInformation.gatherActivities().done(function (response) {
@@ -14,7 +15,12 @@ var application = {
         GetInformation.gatherWeekDaysRadiobuttons().done(function (response) {
             jQuery("#dayOfWeek-holder").html(response);
         });
-        
+    },
+    gatherSchema: function () {
+        //Change the 1 to id
+        GetInformation.gatherSchema(1).done(function (response) {
+            jQuery("#schemaActivities").html(response);
+        });
     }
 }
-window.onload = application.init;
+window.onload = CreateSchema.init;

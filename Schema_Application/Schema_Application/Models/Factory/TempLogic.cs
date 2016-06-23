@@ -10,7 +10,8 @@ namespace Schema_Application.Models.Factory
     public class TempLogic
     {
         private List<WeekDayViewModel> _weekDays;
-        private List<ActivitySummeryViewModel> _activitySummeries;
+        //private List<ActivitySummeryViewModel> _activitySummeries;
+        private List<List<ActivitySummeryViewModel>> _activitySummeries;
 
         private static readonly Random random = new Random();
         private static readonly object syncLock = new object();
@@ -26,9 +27,16 @@ namespace Schema_Application.Models.Factory
             get { return _weekDays;}
             set { _weekDays = value;} 
         }
-        public List<ActivitySummeryViewModel> ActivitySummeries 
+
+        /*public List<ActivitySummeryViewModel> ActivitySummeries 
         {
             get { return _activitySummeries ?? (_activitySummeries = new List<ActivitySummeryViewModel>()); }
+            set { _activitySummeries = value; }
+        }*/
+
+        public List<List<ActivitySummeryViewModel>> ActivitySummeries 
+        {
+            get { return _activitySummeries ?? (_activitySummeries = new List<List<ActivitySummeryViewModel>>()); }
             set { _activitySummeries = value; }
         }
         public TempLogic(List<WeekDayViewModel> weekDays)
@@ -42,19 +50,35 @@ namespace Schema_Application.Models.Factory
         
         public List<WeekDayViewModel> GenerateSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel)
         {
-            foreach (RandomizeActivitySummeriesViewModel randomActivitySummeryViewModel in randomizeActivitySummeriesViewModel)
+            /*foreach (RandomizeActivitySummeriesViewModel randomActivitySummeryViewModel in randomizeActivitySummeriesViewModel)
             {
                 
                 for (int i = 0; i < randomActivitySummeryViewModel.ActivityTimesCountsInWeek; i++)
                 {
                     ActivitySummeries.Add(CreateActivity(randomActivitySummeryViewModel));
                 }
-            }
+            }*/
 
+            for (int i = 0; i < randomizeActivitySummeriesViewModel.Count; i++)
+            {
+                ActivitySummeries.Add(new List<ActivitySummeryViewModel>());
+                for (int j = 0; j < randomizeActivitySummeriesViewModel[i].ActivityTimesCountsInWeek; j++)
+                {
+                    ActivitySummeries.Last().Add(CreateActivity(randomizeActivitySummeriesViewModel[i]));
+                }
+            }
             for (int id = 0; id < WeekDays.Count(); id++)
             {
-                WeekDays[id].ActivitiySummeries = ActivitySummeries.FindAll(x => (x.WeekDayId - 1) == id);
+                foreach (List<ActivitySummeryViewModel> summery in ActivitySummeries)
+                {
+                    WeekDays[id].ActivitiySummeries = WeekDays[id].ActivitiySummeries.Concat(summery.FindAll(x => (x.WeekDayId - 1) == id)).ToList();
+                }
             }
+            
+            /*for (int id = 0; id < WeekDays.Count(); id++)
+            {
+                WeekDays[id].ActivitiySummeries = ActivitySummeries.FindAll(x => (x.WeekDayId - 1) == id);
+            }*/
             return WeekDays;
         }
 
@@ -93,7 +117,7 @@ namespace Schema_Application.Models.Factory
                     {
                         foreach (int id in randomActivitySummeryViewModel.WeekDayId)
                         {
-                            if (!ActivitySummeries.FindAll(x => x.ActivityId == activitySummeryViewModel.ActivityId).
+                            if (!ActivitySummeries.Last().FindAll(x => x.ActivityId == activitySummeryViewModel.ActivityId).
                                            Exists(x => x.WeekDayId == id) && weekDayId != 0)
                             {
                                 weekDayId = id;
@@ -105,7 +129,7 @@ namespace Schema_Application.Models.Factory
                 {
                     weekDayId = RandomNumber(1, 8);
                 }
-            } while (ActivitySummeries.FindAll(x => x.ActivityId == activitySummeryViewModel.ActivityId).
+            } while (ActivitySummeries.Last().FindAll(x => x.ActivityId == activitySummeryViewModel.ActivityId).
                                        Exists(x => x.WeekDayId == weekDayId));
             return weekDayId;
         }
@@ -119,7 +143,7 @@ namespace Schema_Application.Models.Factory
                 activitySummeryViewModel.StartTime = new TimeSpan(activityStartTime, 0, 0);
                 activitySummeryViewModel.EndTime = new TimeSpan(activityStartTime + randomActivitySummeryViewModel.ActivityTime, 0, 0);
 
-                foreach (var activity in ActivitySummeries.FindAll(x => x.WeekDayId == activitySummeryViewModel.WeekDayId))
+                foreach (var activity in ActivitySummeries.Last().FindAll(x => x.WeekDayId == activitySummeryViewModel.WeekDayId))
                 {
                     //Check if the new activity starts after previous activity
                     if (activitySummeryViewModel.StartTime >= activity.EndTime)

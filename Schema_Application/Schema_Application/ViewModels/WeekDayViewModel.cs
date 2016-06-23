@@ -13,7 +13,14 @@ namespace Schema_Application.ViewModels
         public int? Counter { get; set; }
         public List<ActivitySummeryViewModel> ActivitiySummeries
         {
-            get { return _activitySummeries.OrderBy(a => a.StartTime).AsEnumerable().ToList(); }
+            get 
+            {
+                if(_activitySummeries == null)
+                {
+                    _activitySummeries = new List<ActivitySummeryViewModel>();
+                }
+                return _activitySummeries.OrderBy(a => a.StartTime).AsEnumerable().ToList(); 
+            }
             set { _activitySummeries = value; }
         }
     }

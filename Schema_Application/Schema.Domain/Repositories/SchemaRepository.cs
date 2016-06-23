@@ -55,7 +55,6 @@ namespace Schema.Domain.Repositories
         public void CreateActivitySummery(ActivitySummery activitySummery)
         {
             _schemaApplicationEntities.ActivitySummeries.Add(activitySummery);
-            Save();
         }
 
         public void UpdateActivity(Activity activity)

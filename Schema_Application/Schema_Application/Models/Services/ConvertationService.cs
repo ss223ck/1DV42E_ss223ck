@@ -92,6 +92,8 @@ namespace Schema_Application.Models.Services
                         WeekDay = _schemaRepository.GetSpecificWeekDay(activitySummeryViewModel.WeekDayId)
                     };
                 _schemaRepository.CreateActivitySummery(activitySummery);
+                _schemaRepository.Save();
+                _schemaRepository.Dispose();
             }
             catch (Exception)
             {
@@ -102,7 +104,7 @@ namespace Schema_Application.Models.Services
         #region Generate schema
         public List<WeekDayViewModel> GenerateSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel)
         {
-            TempLogic tempLogic = new TempLogic(this.GetWeekDayViewModelsForPartial(null));
+            TempLogic tempLogic = new TempLogic(GetWeekDayViewModelsForPartial(null));
             return tempLogic.GenerateSchema(randomizeActivitySummeriesViewModel);
         }
 

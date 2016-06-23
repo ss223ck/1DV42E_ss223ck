@@ -140,6 +140,20 @@ namespace Schema_Application.Controllers
             }
             return PartialView("_RandomizeActivitySummery", new RandomizeActivitySummeriesViewModel(){ActivityId = id.Value});
         }
+
+        public ActionResult GetActivitySummeries(int? id)
+        {
+            try
+            {
+                return PartialView("_ShowSchema", _convertationRepository.GetWeekDayViewModels((int)id)); 
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = "Something went wrong when trying to get det activities";
+            }
+            return null;
+        }
+
         public ActionResult GetActivities()
         {
             try

@@ -20,5 +20,10 @@ var GetInformation = {
         return $.ajax({
             url: "/Schema/RandomizeActivitySummery/" + id + "?counter=" + counter
         });
+    },
+    gatherSchema: function (id) {
+        return $.ajax({
+            url: "/Schema/GetActivitySummeries/" + id
+        });
     }
 }
