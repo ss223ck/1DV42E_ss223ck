@@ -9,7 +9,7 @@ using System.Web;
 
 namespace Schema_Application.Models.Services
 {
-    public class ConvertationService : IConvertationService
+    public class ConvertService : IConvertService
     {
         ISchemaRepository _schemaRepository = new SchemaRepository();
         public List<WeekDayViewModel> GetWeekDayViewModels(int userID)
@@ -80,17 +80,17 @@ namespace Schema_Application.Models.Services
             try
             {
                 ActivitySummery activitySummery = new ActivitySummery()
-                    {
-                        ActivityId = activitySummeryViewModel.ActivityId,
-                        WeekDayId = activitySummeryViewModel.WeekDayId,
-                        //ADD tempdata userId
-                        UserId = 1,
-                        StartTime = activitySummeryViewModel.StartTime,
-                        EndTime = activitySummeryViewModel.EndTime,
-                        ActivityDescription = activitySummeryViewModel.Description,
-                        Activity = _schemaRepository.GetSpecificActivity(activitySummeryViewModel.ActivityId),
-                        WeekDay = _schemaRepository.GetSpecificWeekDay(activitySummeryViewModel.WeekDayId)
-                    };
+                {
+                    ActivityId = activitySummeryViewModel.ActivityId,
+                    WeekDayId = activitySummeryViewModel.WeekDayId,
+                    //ADD tempdata userId
+                    UserId = 1,
+                    StartTime = activitySummeryViewModel.StartTime,
+                    EndTime = activitySummeryViewModel.EndTime,
+                    ActivityDescription = activitySummeryViewModel.Description,
+                    Activity = _schemaRepository.GetSpecificActivity(activitySummeryViewModel.ActivityId),
+                    WeekDay = _schemaRepository.GetSpecificWeekDay(activitySummeryViewModel.WeekDayId)
+                };
                 _schemaRepository.CreateActivitySummery(activitySummery);
                 _schemaRepository.Save();
                 _schemaRepository.Dispose();
@@ -153,8 +153,5 @@ namespace Schema_Application.Models.Services
                 throw new Exception("Something went wrong when trying to get activity view models");
             }
         }
-
-        
-
     }
 }

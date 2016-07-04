@@ -10,7 +10,6 @@ namespace Schema_Application.Models.Factory
     public class TempLogic
     {
         private List<WeekDayViewModel> _weekDays;
-        //private List<ActivitySummeryViewModel> _activitySummeries;
         private List<List<ActivitySummeryViewModel>> _activitySummeries;
 
         private static readonly Random random = new Random();
@@ -27,12 +26,6 @@ namespace Schema_Application.Models.Factory
             get { return _weekDays;}
             set { _weekDays = value;} 
         }
-
-        /*public List<ActivitySummeryViewModel> ActivitySummeries 
-        {
-            get { return _activitySummeries ?? (_activitySummeries = new List<ActivitySummeryViewModel>()); }
-            set { _activitySummeries = value; }
-        }*/
 
         public List<List<ActivitySummeryViewModel>> ActivitySummeries 
         {
@@ -118,12 +111,12 @@ namespace Schema_Application.Models.Factory
                         foreach (int id in randomActivitySummeryViewModel.WeekDayId)
                         {
                             if (!ActivitySummeries.Last().FindAll(x => x.ActivityId == activitySummeryViewModel.ActivityId).
-                                           Exists(x => x.WeekDayId == id) && weekDayId != 0)
+                                           Exists(x => x.WeekDayId == id) && weekDayId == 0)
                             {
                                 weekDayId = id;
                             }
                         }
-                    } 
+                    }
                 }
                 if(weekDayId == 0)
                 {

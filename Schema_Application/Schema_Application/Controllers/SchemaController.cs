@@ -14,7 +14,7 @@ namespace Schema_Application.Controllers
     public class SchemaController : Controller
     {
         ISchemaRepository _schemaRepository = new SchemaRepository();
-        IConvertationService _convertationRepository = new ConvertationService();
+        IConvertService _convertService = new ConvertService();
 
         #region Index
         public ActionResult Index()
@@ -22,7 +22,7 @@ namespace Schema_Application.Controllers
             /*TempData["userID"] = 1;
             var userID = TempData["userID"];*/
             int userID = 1;
-            return View("Index", _convertationRepository.GetWeekDayViewModels(userID));
+            return View("Index", _convertService.GetWeekDayViewModels(userID));
         }
 
         #endregion
@@ -34,7 +34,7 @@ namespace Schema_Application.Controllers
             {
                 try
                 {
-                    return View("Details", _convertationRepository.GetActivityViewModel((int)id));
+                    return View("Details", _convertService.GetActivityViewModel((int)id));
                 }
                 catch (Exception)
                 {
@@ -59,7 +59,7 @@ namespace Schema_Application.Controllers
             {
                 try
                 {
-                    return View("Edit", _convertationRepository.GetActivityViewModel((int)id));
+                    return View("Edit", _convertService.GetActivityViewModel((int)id));
                 }
                 catch (Exception)
                 {
@@ -92,9 +92,9 @@ namespace Schema_Application.Controllers
                 {
                     /*var userID = TempData["userID"];*/
                     int userID = 1;
-                    _convertationRepository.CreateActivitySummery(activitySummeryViewModel);
+                    _convertService.CreateActivitySummery(activitySummeryViewModel);
 
-                    return PartialView("_ShowSchema", _convertationRepository.GetWeekDayViewModels(userID)); 
+                    return PartialView("_ShowSchema", _convertService.GetWeekDayViewModels(userID)); 
                 }
                 catch (Exception)
                 {
@@ -117,7 +117,7 @@ namespace Schema_Application.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult RandomizeSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel)
         {
-            var returnvalues = _convertationRepository.GenerateSchema(randomizeActivitySummeriesViewModel);
+            var returnvalues = _convertService.GenerateSchema(randomizeActivitySummeriesViewModel);
             return PartialView("_ShowSchema", returnvalues);
         }
         
@@ -130,7 +130,7 @@ namespace Schema_Application.Controllers
             {
                 try
                 {
-                    return PartialView("_RandomizeActivitySummery", _convertationRepository.GetRandomizeActivitySummeryViewModel((int)id, counter));
+                    return PartialView("_RandomizeActivitySummery", _convertService.GetRandomizeActivitySummeryViewModel((int)id, counter));
                 }
                 catch (Exception)
                 {
@@ -145,7 +145,7 @@ namespace Schema_Application.Controllers
         {
             try
             {
-                return PartialView("_ShowSchema", _convertationRepository.GetWeekDayViewModels((int)id)); 
+                return PartialView("_ShowSchema", _convertService.GetWeekDayViewModels((int)id)); 
             }
             catch (Exception)
             {
@@ -158,7 +158,7 @@ namespace Schema_Application.Controllers
         {
             try
             {
-                return PartialView("_ActivityDropdown", _convertationRepository.GetActivityViewModels());
+                return PartialView("_ActivityDropdown", _convertService.GetActivityViewModels());
             } catch(Exception)
             {
                 TempData["ErrorMessage"] = "Something went wrong when trying to get det activities";
@@ -171,7 +171,7 @@ namespace Schema_Application.Controllers
             {
                 try
                 {
-                    return PartialView("_WeekDaysCheckBoxes", _convertationRepository.GetWeekDayViewModelsForPartial((int)counterID).AsEnumerable());
+                    return PartialView("_WeekDaysCheckBoxes", _convertService.GetWeekDayViewModelsForPartial((int)counterID).AsEnumerable());
                 } catch(Exception)
                 {
                     TempData["ErrorMessage"] = "Something went wrong when trying to get the checkboxes";
@@ -183,7 +183,7 @@ namespace Schema_Application.Controllers
         {
             try
             {
-                return PartialView("_WeekDaysRadioButtons", _convertationRepository.GetWeekDayViewModelsForPartial(null).AsEnumerable());
+                return PartialView("_WeekDaysRadioButtons", _convertService.GetWeekDayViewModelsForPartial(null).AsEnumerable());
             }
             catch (Exception)
             {

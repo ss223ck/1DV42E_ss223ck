@@ -189,8 +189,8 @@
     <Compile Include="Models\Factory\TempLogic.cs" />
     <Compile Include="Models\Factory\WhenActivity.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Services\ConvertationService.cs" />
-    <Compile Include="Models\Services\IConvertationService.cs" />
+    <Compile Include="Models\Services\ConvertService.cs" />
+    <Compile Include="Models\Services\IConvertService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ActivitySummeryViewModel.cs" />

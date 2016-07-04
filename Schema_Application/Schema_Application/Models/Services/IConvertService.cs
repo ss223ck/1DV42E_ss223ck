@@ -1,5 +1,4 @@
-﻿using Schema.Domain.DataModels;
-using Schema_Application.ViewModels;
+﻿using Schema_Application.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Schema_Application.Models.Services
 {
-    public interface IConvertationService
+    public interface IConvertService
     {
         List<WeekDayViewModel> GetWeekDayViewModels(int userID);
         List<WeekDayViewModel> GetWeekDayViewModelsForPartial(int? counterID);
