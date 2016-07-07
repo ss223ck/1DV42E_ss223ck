@@ -20,9 +20,9 @@ namespace Schema.Domain.Repositories
             return _schemaApplicationEntities.WeekDays.AsQueryable();
         }
 
-        public IEnumerable<ActivitySummery> GetAllActivitySummeries()
+        public IEnumerable<ActivitySummery> GetAllActivitySummeries(int userId)
         {
-            return _schemaApplicationEntities.ActivitySummeries.AsQueryable();
+            return _schemaApplicationEntities.ActivitySummeries.Where(x => x.UserId == userId).AsQueryable();
         }
         public Activity GetSpecificActivity(int id)
         {
@@ -40,11 +40,12 @@ namespace Schema.Domain.Repositories
         public IEnumerable<WeekDay> GetUserSpecificWeekDayActivities(int userId)
         {
             IEnumerable<WeekDay> weekDays = _schemaApplicationEntities.WeekDays.AsQueryable();
-            
-            foreach(WeekDay day in weekDays)
+
+            foreach (WeekDay day in weekDays)
             {
                 day.ActivitySummeries = day.ActivitySummeries.Where(a => a.UserId == userId).ToList();
             }
+            
             return weekDays;
         }
         public void CreateActivity(Activity activity)
@@ -65,6 +66,12 @@ namespace Schema.Domain.Repositories
         public void DeleteActivity(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public void DeleteActivitySummery(int id)
+        {
+            ActivitySummery activitySummery = _schemaApplicationEntities.ActivitySummeries.Find(id);
+            _schemaApplicationEntities.ActivitySummeries.Remove(activitySummery);
         }
 
         #region Save And Dipose

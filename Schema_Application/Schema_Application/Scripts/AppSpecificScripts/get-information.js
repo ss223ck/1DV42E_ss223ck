@@ -25,5 +25,10 @@ var GetInformation = {
         return $.ajax({
             url: "/Schema/GetActivitySummeries/" + id
         });
+    },
+    saveSchema: function () {
+        return $.ajax({
+            url: "/Schema/SaveGeneratedSchema/"
+        });
     }
 }

@@ -200,13 +200,12 @@ namespace Schema_Application.Controllers
             var weekDays = (List<WeekDayViewModel>)TempData["RandomizedSchema"];
             if (weekDays != null)
             {
-                foreach (WeekDayViewModel weekDay in weekDays)
-                {
-                    foreach(ActivitySummeryViewModel activitySummery in weekDay.ActivitiySummeries)
-                    {
-                        
-                    }
-                }
+                //change 1 to TempData["userID"]
+                _convertService.CreateNewGeneratedSchema(weekDays, 1);
+            }
+            else
+            {
+                
             }
             return null;
         }

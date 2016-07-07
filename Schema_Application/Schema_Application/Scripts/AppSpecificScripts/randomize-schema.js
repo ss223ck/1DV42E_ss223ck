@@ -4,6 +4,7 @@ var application = {
     init: function () {
         application.renderActivityDropdown();
         document.getElementById('generateNewActivity').addEventListener('click', application.renderActivitySummery);
+        document.getElementById("saveSchema").addEventListener("click", application.saveSchema);
     },
     renderActivityDropdown: function () {
         GetInformation.gatherActivities().done(function (response) {
@@ -29,6 +30,9 @@ var application = {
         }, function (error) {
             console.log(error);
         });
+    },
+    saveSchema: function () {
+        GetInformation.saveSchema();
     }
 }
 window.onload = application.init;
