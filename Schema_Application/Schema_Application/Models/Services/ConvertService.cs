@@ -23,6 +23,7 @@ namespace Schema_Application.Models.Services
                 viewModels.Add(new WeekDayViewModel
                 {
                     Day = model.Day,
+                    WeekDayId = model.WeekDayId,
                     ActivitiySummeries = model.ActivitySummeries.Select(item => new ActivitySummeryViewModel()
                     {
                         ActivitySummeryId = item.ActivitySummeryId,
@@ -101,11 +102,24 @@ namespace Schema_Application.Models.Services
             }
         }
 
+        public void CreateNewGeneratedSchema(List<WeekDayViewModel> weekDays)
+        {
+
+            foreach (WeekDayViewModel weekDay in weekDays)
+            {
+                foreach (ActivitySummeryViewModel activitySummery in weekDay.ActivitiySummeries)
+                {
+                    CreateActivitySummery(activitySummery);
+                }
+            }
+        }
+
         #region Generate schema
         public List<WeekDayViewModel> GenerateSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel)
         {
-            TempLogic tempLogic = new TempLogic(GetWeekDayViewModelsForPartial(null));
-            return tempLogic.GenerateSchema(randomizeActivitySummeriesViewModel);
+            //change null to right userId
+            SchemaGenerator schemaGenerator = new SchemaGenerator(GetWeekDayViewModelsForPartial(null), GetWeekDayViewModels(1));
+            return schemaGenerator.GenerateSchema(randomizeActivitySummeriesViewModel);
         }
 
         #endregion

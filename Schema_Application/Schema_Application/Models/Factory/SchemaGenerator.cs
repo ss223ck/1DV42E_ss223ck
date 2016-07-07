@@ -7,10 +7,11 @@ using System.Web;
 
 namespace Schema_Application.Models.Factory
 {
-    public class TempLogic
+    public class SchemaGenerator
     {
         private List<WeekDayViewModel> _weekDays;
         private List<List<ActivitySummeryViewModel>> _activitySummeries;
+        private List<WeekDayViewModel> _userWeekDay;
 
         private static readonly Random random = new Random();
         private static readonly object syncLock = new object();
@@ -32,7 +33,7 @@ namespace Schema_Application.Models.Factory
             get { return _activitySummeries ?? (_activitySummeries = new List<List<ActivitySummeryViewModel>>()); }
             set { _activitySummeries = value; }
         }
-        public TempLogic(List<WeekDayViewModel> weekDays)
+        public SchemaGenerator(List<WeekDayViewModel> weekDays)
         {
             if(weekDays.Count() != 7)
             {
@@ -41,18 +42,18 @@ namespace Schema_Application.Models.Factory
             WeekDays = weekDays;
         }
 
-        public TempLogic(List<WeekDayViewModel> weekDays, List<WeekDayViewModel> userWeekDay)
+        public SchemaGenerator(List<WeekDayViewModel> weekDays, List<WeekDayViewModel> userWeekDay)
         {
             if (weekDays.Count() != 7)
             {
                 throw new Exception("weekDays in constructor for templogic got != 7 value");
             }
+            _userWeekDay = userWeekDay;
             WeekDays = weekDays;
         }
         
         public List<WeekDayViewModel> GenerateSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel)
         {
-
             for (int i = 0; i < randomizeActivitySummeriesViewModel.Count; i++)
             {
                 ActivitySummeries.Add(new List<ActivitySummeryViewModel>());
@@ -65,11 +66,11 @@ namespace Schema_Application.Models.Factory
             {
                 foreach (List<ActivitySummeryViewModel> summery in ActivitySummeries)
                 {
-                    WeekDays[id].ActivitiySummeries = WeekDays[id].ActivitiySummeries.Concat(summery.FindAll(x => (x.WeekDayId - 1) == id)).ToList();
+                    _userWeekDay[id].ActivitiySummeries = _userWeekDay[id].ActivitiySummeries.Concat(summery.FindAll(x => (x.WeekDayId - 1) == id)).ToList();
                 }
             }
-            
-            return WeekDays;
+
+            return _userWeekDay;
         }
 
         private ActivitySummeryViewModel CreateActivity(RandomizeActivitySummeriesViewModel randomActivitySummeryViewModel)
@@ -121,6 +122,7 @@ namespace Schema_Application.Models.Factory
                 }
             } while (ActivitySummeries.Last().FindAll(x => x.ActivityId == activitySummeryViewModel.ActivityId).
                                        Exists(x => x.WeekDayId == weekDayId));
+            
             return weekDayId;
         }
 
@@ -133,21 +135,26 @@ namespace Schema_Application.Models.Factory
                 activitySummeryViewModel.StartTime = new TimeSpan(activityStartTime, 0, 0);
                 activitySummeryViewModel.EndTime = new TimeSpan(activityStartTime + randomActivitySummeryViewModel.ActivityTime, 0, 0);
 
-                foreach (var activity in ActivitySummeries.Last().FindAll(x => x.WeekDayId == activitySummeryViewModel.WeekDayId))
+                var list3 = ActivitySummeries.Concat(_userWeekDay.Select(x => x.ActivitiySummeries));
+
+                foreach (var activityList in list3)
                 {
-                    //Check if the new activity starts after previous activity
-                    if (activitySummeryViewModel.StartTime >= activity.EndTime)
+                    foreach (var activity in activityList.FindAll(x => x.WeekDayId == activitySummeryViewModel.WeekDayId))
                     {
-                        isActivityTimeSpanNotGood = false;
-                    }
-                    // Check if the new activity starts earlier and do not overlap the other acitivity starttime
-                    else if (activitySummeryViewModel.StartTime < activity.StartTime && activitySummeryViewModel.EndTime <= activity.StartTime)
-                    {
-                        isActivityTimeSpanNotGood = false;
-                    }
-                    else
-                    {
-                        isActivityTimeSpanNotGood = true;
+                        //Check if the new activity starts after previous activity
+                        if (activitySummeryViewModel.StartTime >= activity.EndTime)
+                        {
+                            isActivityTimeSpanNotGood = false;
+                        }
+                        // Check if the new activity starts earlier and do not overlap the other acitivity starttime
+                        else if (activitySummeryViewModel.StartTime < activity.StartTime && activitySummeryViewModel.EndTime <= activity.StartTime)
+                        {
+                            isActivityTimeSpanNotGood = false;
+                        }
+                        else
+                        {
+                            isActivityTimeSpanNotGood = true;
+                        }
                     }
                 }
             } while (isActivityTimeSpanNotGood);

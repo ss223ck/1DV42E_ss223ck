@@ -113,11 +113,14 @@ namespace Schema_Application.Controllers
         {
             return View("RandomizeSchema");
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult RandomizeSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel)
         {
             var returnvalues = _convertService.GenerateSchema(randomizeActivitySummeriesViewModel);
+            TempData["RandomizedSchema"] = returnvalues;
+            
             return PartialView("_ShowSchema", returnvalues);
         }
         
@@ -188,6 +191,22 @@ namespace Schema_Application.Controllers
             catch (Exception)
             {
                 TempData["ErrorMessage"] = "Something went wrong when trying to get the checkboxes";
+            }
+            return null;
+        }
+
+        public ActionResult SaveGeneratedSchema()
+        {
+            var weekDays = (List<WeekDayViewModel>)TempData["RandomizedSchema"];
+            if (weekDays != null)
+            {
+                foreach (WeekDayViewModel weekDay in weekDays)
+                {
+                    foreach(ActivitySummeryViewModel activitySummery in weekDay.ActivitiySummeries)
+                    {
+                        
+                    }
+                }
             }
             return null;
         }

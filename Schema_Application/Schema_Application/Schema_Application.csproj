@@ -186,6 +186,7 @@
     <Compile Include="Models\Factory\IWhenAcktivity.cs" />
     <Compile Include="Models\Factory\OnlyOnePerDay.cs" />
     <Compile Include="Models\Factory\RulesFactory.cs" />
+    <Compile Include="Models\Factory\SchemaGenerator.cs" />
     <Compile Include="Models\Factory\TempLogic.cs" />
     <Compile Include="Models\Factory\WhenActivity.cs" />
     <Compile Include="Models\IdentityModels.cs" />
