@@ -109,21 +109,42 @@ namespace Schema_Application.Controllers
         #endregion
 
         #region RandomizeSchema
-        public ActionResult RandomizeSchema()
+        //public ActionResult RandomizeSchema()
+        //{
+        //    return View("RandomizeSchema");
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult RandomizeSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel)
+        //{
+        //    var returnvalues = _convertService.GenerateSchema(randomizeActivitySummeriesViewModel);
+        //    TempData["RandomizedSchema"] = returnvalues;
+
+        //    return PartialView("_ShowSchema", returnvalues);
+        //}
+        public ActionResult RandomizeSchema2()
         {
-            return View("RandomizeSchema");
+            return View("RandomizeSchema2");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RandomizeSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel)
+        public ActionResult RandomizeSchema2(List<WeekDayViewModel> WeekDaysViewModel)
         {
-            var returnvalues = _convertService.GenerateSchema(randomizeActivitySummeriesViewModel);
-            TempData["RandomizedSchema"] = returnvalues;
-            
-            return PartialView("_ShowSchema", returnvalues);
+            var weekDays = (List<WeekDayViewModel>)TempData["RandomizedSchema"];
+            if (weekDays != null)
+            {
+                //change 1 to TempData["userID"]
+                _convertService.CreateNewGeneratedSchema(weekDays, 1);
+            }
+            else
+            {
+
+            }
+            TempData["SuccessMessage"] = "The schema is saved";
+            return Redirect("Index");
         }
-        
         #endregion
 
         #region partialviews
@@ -205,9 +226,25 @@ namespace Schema_Application.Controllers
             }
             else
             {
-                
+
             }
             return null;
+        }
+        //public ActionResult SaveGeneratedSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel)
+        //{
+        //    var returnvalues = _convertService.GenerateSchema(randomizeActivitySummeriesViewModel);
+        //    TempData["RandomizedSchema"] = returnvalues;
+
+        //    return PartialView("_ShowSchema", returnvalues);
+        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RandomizeSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel)
+        {
+            var returnvalues = _convertService.GenerateSchema(randomizeActivitySummeriesViewModel);
+            TempData["RandomizedSchema"] = returnvalues;
+
+            return PartialView("_ShowSchema", returnvalues);
         }
 
         #endregion

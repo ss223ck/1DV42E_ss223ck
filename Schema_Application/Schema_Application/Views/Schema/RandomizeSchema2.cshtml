@@ -4,10 +4,6 @@
 @{
     ViewBag.Title = "Randomize Schema";
     Layout = "~/Views/Shared/_LayoutSchema.cshtml";
-    var ajaxOptions = new AjaxOptions
-    {
-        UpdateTargetId = "schema-container"
-    };
 }
 
 <div class="page-header">
@@ -24,7 +20,7 @@
         </div>
     </div>
     <div class="information-container" id="activity-group-container">
-        @using (Ajax.BeginForm(ajaxOptions))
+        @using (BeginForm())
         {
             @Html.AntiForgeryToken()
 
@@ -40,7 +36,11 @@
         }
     </div>
     <div id="" class="information-container">
-        <input type="submit" id="saveSchema" class="btn btn-default" value="Save schema" />
+        @using (BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <input type="submit" id="saveSchema" class="btn btn-default" value="Save schema" />
+        }
         <div id="schema-container">
 
         </div>
