@@ -4,10 +4,6 @@
 @{
     ViewBag.Title = "Randomize Schema";
     Layout = "~/Views/Shared/_LayoutSchema.cshtml";
-    var ajaxOptions = new AjaxOptions
-    {
-        UpdateTargetId = "schema-container"
-    };
 }
 
 <div class="page-header">
@@ -23,27 +19,17 @@
             <input type="button" id="generateNewActivity" class="btn btn-default" value="Get new activity" />
         </div>
     </div>
-    <div class="information-container" id="activity-group-container">
-        @using (Ajax.BeginForm(ajaxOptions))
+    @Html.Partial("_GenerateSchema")
+    <div id="" class="information-container">
+        @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
+            <input type="submit" id="saveSchema" class="btn btn-default" value="Save schema" />
 
-            <div class="form-group" id="generate-schema-container">
-                <div class="text-information-holder">
-                    <p class="lead">Press the button when you are done adding activities to your future schema and the schema will be generated</p>
-                </div>
+            <div id="schema-container">
 
-                <input type="submit" id="generateSchema" class="btn btn-default" value="Generate schema!" />
-            </div>
-            <div id="activity-summeries-holder">
             </div>
         }
-    </div>
-    <div id="" class="information-container">
-        <input type="submit" id="saveSchema" class="btn btn-default" value="Save schema" />
-        <div id="schema-container">
-
-        </div>
     </div>
 </div>
 

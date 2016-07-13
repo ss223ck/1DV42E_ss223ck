@@ -109,28 +109,14 @@ namespace Schema_Application.Controllers
         #endregion
 
         #region RandomizeSchema
-        //public ActionResult RandomizeSchema()
-        //{
-        //    return View("RandomizeSchema");
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult RandomizeSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel)
-        //{
-        //    var returnvalues = _convertService.GenerateSchema(randomizeActivitySummeriesViewModel);
-        //    TempData["RandomizedSchema"] = returnvalues;
-
-        //    return PartialView("_ShowSchema", returnvalues);
-        //}
-        public ActionResult RandomizeSchema2()
+        public ActionResult RandomizeSchema()
         {
-            return View("RandomizeSchema2");
+            return View("RandomizeSchema");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RandomizeSchema2(List<WeekDayViewModel> WeekDaysViewModel)
+        public ActionResult RandomizeSchema(List<WeekDayViewModel> WeekDaysViewModel)
         {
             var weekDays = (List<WeekDayViewModel>)TempData["RandomizedSchema"];
             if (weekDays != null)
@@ -216,30 +202,9 @@ namespace Schema_Application.Controllers
             return null;
         }
 
-        public ActionResult SaveGeneratedSchema()
-        {
-            var weekDays = (List<WeekDayViewModel>)TempData["RandomizedSchema"];
-            if (weekDays != null)
-            {
-                //change 1 to TempData["userID"]
-                _convertService.CreateNewGeneratedSchema(weekDays, 1);
-            }
-            else
-            {
-
-            }
-            return null;
-        }
-        //public ActionResult SaveGeneratedSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel)
-        //{
-        //    var returnvalues = _convertService.GenerateSchema(randomizeActivitySummeriesViewModel);
-        //    TempData["RandomizedSchema"] = returnvalues;
-
-        //    return PartialView("_ShowSchema", returnvalues);
-        //}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RandomizeSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel)
+        public ActionResult GenerateSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel)
         {
             var returnvalues = _convertService.GenerateSchema(randomizeActivitySummeriesViewModel);
             TempData["RandomizedSchema"] = returnvalues;

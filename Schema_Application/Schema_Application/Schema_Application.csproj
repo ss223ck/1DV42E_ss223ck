@@ -220,6 +220,7 @@
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\AppSpecificScripts\get-information.js" />
     <Content Include="Scripts\AppSpecificScripts\create-schema.js" />
+    <Content Include="Scripts\AppSpecificScripts\randomize-schema2.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
@@ -282,8 +283,7 @@
     <Content Include="Views\Schema\_WeekDaysRadioButtons.cshtml" />
     <Content Include="Views\Schema\Details.cshtml" />
     <Content Include="Views\Schema\Edit.cshtml" />
-    <Content Include="Views\Schema\RandomizeSchema2.cshtml" />
-    <Content Include="Views\Schema\_RandomizeSchema.cshtml" />
+    <Content Include="Views\Schema\_GenerateSchema.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

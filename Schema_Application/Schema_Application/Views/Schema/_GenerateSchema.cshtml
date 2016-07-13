@@ -5,7 +5,7 @@
     };
 }
 <div class="information-container" id="activity-group-container">
-    @using (Ajax.BeginForm(ajaxOptions))
+    @using (Ajax.BeginForm("GenerateSchema", ajaxOptions))
     {
         @Html.AntiForgeryToken()
 

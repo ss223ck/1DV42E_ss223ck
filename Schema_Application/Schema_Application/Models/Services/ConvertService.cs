@@ -110,8 +110,7 @@ namespace Schema_Application.Models.Services
             {
                 _schemaRepository.DeleteActivitySummery(activitySummery.ActivitySummeryId);
             }
-            //_schemaRepository.Save();
-            //_schemaRepository.Dispose();
+
             foreach (WeekDayViewModel weekDay in weekDays)
             {
                 foreach (ActivitySummeryViewModel activitySummeryViewModel in weekDay.ActivitiySummeries)
@@ -122,7 +121,7 @@ namespace Schema_Application.Models.Services
                         {
                             ActivityId = activitySummeryViewModel.ActivityId,
                             WeekDayId = activitySummeryViewModel.WeekDayId,
-                            //ADD tempdata userId
+                            //Change userId
                             UserId = 1,
                             StartTime = activitySummeryViewModel.StartTime,
                             EndTime = activitySummeryViewModel.EndTime,
@@ -131,6 +130,9 @@ namespace Schema_Application.Models.Services
                             WeekDay = _schemaRepository.GetSpecificWeekDay(activitySummeryViewModel.WeekDayId)
                         };
                         _schemaRepository.CreateActivitySummery(activitySummery);
+                        _schemaRepository.Save();
+                        _schemaRepository.Dispose();
+                        _schemaRepository = new SchemaRepository();
                     }
                     catch (Exception)
                     {
@@ -138,8 +140,6 @@ namespace Schema_Application.Models.Services
                     }
                 }
             }
-            _schemaRepository.Save();
-            _schemaRepository.Dispose();
         }
 
         #region Generate schema
