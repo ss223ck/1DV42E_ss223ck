@@ -59,7 +59,15 @@ namespace Schema_Application.Models.Factory
                 ActivitySummeries.Add(new List<ActivitySummeryViewModel>());
                 for (int j = 0; j < randomizeActivitySummeriesViewModel[i].ActivityTimesCountsInWeek; j++)
                 {
-                    ActivitySummeries.Last().Add(CreateActivity(randomizeActivitySummeriesViewModel[i]));
+                    if (randomizeActivitySummeriesViewModel[i].ActivityId == 2)
+                    {
+                        CreateActivitiesForStudy(randomizeActivitySummeriesViewModel[i]);
+                    }
+                    else
+                    {
+                        ActivitySummeries.Last().Add(CreateActivity(randomizeActivitySummeriesViewModel[i]));
+                    }
+                    
                 }
             }
             for (int id = 0; id < WeekDays.Count(); id++)
@@ -75,16 +83,8 @@ namespace Schema_Application.Models.Factory
 
         private ActivitySummeryViewModel CreateActivity(RandomizeActivitySummeriesViewModel randomActivitySummeryViewModel)
         {
+            ActivitySummeryViewModel activitySummeryViewModel = InitiateActivitySummeryStandardProperties(randomActivitySummeryViewModel);
 
-            ActivitySummeryViewModel activitySummeryViewModel = new ActivitySummeryViewModel()
-            {
-                ActivityId = randomActivitySummeryViewModel.ActivityId,
-                ActivitySummeryId = randomActivitySummeryViewModel.ActivityId,
-                //Change userID
-                Userid = 1,
-                Name = randomActivitySummeryViewModel.ActivityName,
-                Description = randomActivitySummeryViewModel.Description
-            };
             activitySummeryViewModel.WeekDayId = CreateActivityWeekDayId(activitySummeryViewModel, randomActivitySummeryViewModel);
             CreateActivityTimeSpan(activitySummeryViewModel, randomActivitySummeryViewModel);
 
@@ -92,6 +92,19 @@ namespace Schema_Application.Models.Factory
             return activitySummeryViewModel;
         }
 
+        private ActivitySummeryViewModel InitiateActivitySummeryStandardProperties(RandomizeActivitySummeriesViewModel randomActivitySummeryViewModel)
+        {
+            ActivitySummeryViewModel activitySummeryViewModel = new ActivitySummeryViewModel()
+            {
+                ActivityId = randomActivitySummeryViewModel.ActivityId,
+                ActivitySummeryId = 0,
+                //Change userID
+                Userid = 1,
+                Name = randomActivitySummeryViewModel.ActivityName,
+                Description = randomActivitySummeryViewModel.Description
+            };
+            return activitySummeryViewModel;
+        }
         private int CreateActivityWeekDayId(ActivitySummeryViewModel activitySummeryViewModel, RandomizeActivitySummeriesViewModel randomActivitySummeryViewModel)
         {
             int weekDayId;
@@ -135,9 +148,9 @@ namespace Schema_Application.Models.Factory
                 activitySummeryViewModel.StartTime = new TimeSpan(activityStartTime, 0, 0);
                 activitySummeryViewModel.EndTime = new TimeSpan(activityStartTime + randomActivitySummeryViewModel.ActivityTime, 0, 0);
 
-                var list3 = ActivitySummeries.Concat(_userWeekDay.Select(x => x.ActivitiySummeries));
+                var allActivitySummeries = ActivitySummeries.Concat(_userWeekDay.Select(x => x.ActivitiySummeries));
 
-                foreach (var activityList in list3)
+                foreach (var activityList in allActivitySummeries)
                 {
                     foreach (var activity in activityList.FindAll(x => x.WeekDayId == activitySummeryViewModel.WeekDayId))
                     {
@@ -159,5 +172,93 @@ namespace Schema_Application.Models.Factory
                 }
             } while (isActivityTimeSpanNotGood);
         }
+
+        private void CreateActivitiesForStudy(RandomizeActivitySummeriesViewModel randomActivitySummeryViewModel)
+        {
+            ActivitySummeryViewModel activitySummeryViewModel = InitiateActivitySummeryStandardProperties(randomActivitySummeryViewModel);
+            activitySummeryViewModel.WeekDayId = CreateActivityWeekDayId(activitySummeryViewModel, randomActivitySummeryViewModel);
+
+            List<ActivitySummeryViewModel> newlist = new List<ActivitySummeryViewModel>(100) { new ActivitySummeryViewModel()};
+            List<ActivitySummeryViewModel> specificDayList = new List<ActivitySummeryViewModel>(100);
+
+            ActivitySummeries.ForEach(delegate(List<ActivitySummeryViewModel> activityList)
+            {
+                newlist.AddRange(activityList);
+            });
+
+            _userWeekDay.ForEach(delegate(WeekDayViewModel weekDay)
+            {
+                newlist.AddRange(weekDay.ActivitiySummeries);
+            });
+
+            specificDayList = newlist.Where(x => x.WeekDayId == activitySummeryViewModel.WeekDayId).OrderBy(y => y.StartTime).ToList();         
+
+            if (specificDayList.Count == 0 || specificDayList[0].StartTime >= new TimeSpan(11, 0, 0))
+            {
+                activitySummeryViewModel.StartTime = new TimeSpan(8, 0, 0);
+                activitySummeryViewModel.EndTime = activitySummeryViewModel.StartTime + new TimeSpan(1, 0, 0);
+            }
+            else
+            {
+                for(int i = 0; i < (specificDayList.Count() - 1); i++)
+                {
+                    if((specificDayList[i + 1].StartTime - specificDayList[i].EndTime) >= new TimeSpan(1, 20, 0))
+                    {
+                        activitySummeryViewModel.StartTime = specificDayList[i].EndTime;
+                        activitySummeryViewModel.EndTime = activitySummeryViewModel.StartTime + new TimeSpan(1, 0, 0);
+                    }
+                }
+            }
+            _activitySummeries.Last().Add(activitySummeryViewModel);
+            ActivitySummeryViewModel firstBreak = CreateBreak(activitySummeryViewModel.EndTime, activitySummeryViewModel.WeekDayId); 
+            _activitySummeries.Last().Add(firstBreak);
+            specificDayList.Add(activitySummeryViewModel);
+            specificDayList.Add(firstBreak);
+            specificDayList = specificDayList.OrderBy(y => y.StartTime).ToList();
+
+            for (int i = 1; i < randomActivitySummeryViewModel.ActivityTime; i++)
+            {
+                ActivitySummeryViewModel activitySummeryViewModelNew = InitiateActivitySummeryStandardProperties(randomActivitySummeryViewModel);
+                bool isActivityNotAdded = true;
+
+                activitySummeryViewModelNew.WeekDayId = activitySummeryViewModel.WeekDayId;
+                
+                for (int j = 0; j < specificDayList.Count(); j++)
+                {
+                    if (isActivityNotAdded && j == specificDayList.Count() - 1 || isActivityNotAdded && (specificDayList[j + 1].StartTime - specificDayList[j].EndTime) >= new TimeSpan(1, 20, 0))
+                    {
+                        activitySummeryViewModelNew.StartTime = specificDayList[j].EndTime;
+                        activitySummeryViewModelNew.EndTime = activitySummeryViewModelNew.StartTime + new TimeSpan(1, 0, 0);
+                        _activitySummeries.Last().Add(activitySummeryViewModelNew);
+
+                        ActivitySummeryViewModel secondBreak = CreateBreak(activitySummeryViewModelNew.EndTime, activitySummeryViewModel.WeekDayId);
+                        _activitySummeries.Last().Add(CreateBreak(activitySummeryViewModelNew.EndTime, activitySummeryViewModel.WeekDayId));
+
+                        specificDayList.Add(activitySummeryViewModelNew);
+                        specificDayList.Add(secondBreak);
+                        specificDayList = specificDayList.OrderBy(y => y.StartTime).ToList();
+                        isActivityNotAdded = false;
+                    }
+                }
+            }
+        }
+
+        private ActivitySummeryViewModel CreateBreak(TimeSpan breakStartTime, int weekDayId)
+        {
+            ActivitySummeryViewModel breakInActivitySummery = new ActivitySummeryViewModel()
+            {
+                ActivityId = 0,
+                ActivitySummeryId = 9,
+                //Change userID
+                Userid = 1,
+                Name = "Break",
+                Description = "Time to take a break",
+                StartTime = breakStartTime,
+                EndTime = breakStartTime + new TimeSpan(0, 20, 0),
+                WeekDayId = weekDayId
+            };
+            return breakInActivitySummery;
+        }
+
     }
 }

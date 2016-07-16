@@ -220,7 +220,6 @@
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\AppSpecificScripts\get-information.js" />
     <Content Include="Scripts\AppSpecificScripts\create-schema.js" />
-    <Content Include="Scripts\AppSpecificScripts\randomize-schema2.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
