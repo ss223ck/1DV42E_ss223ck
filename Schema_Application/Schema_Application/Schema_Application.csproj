@@ -283,6 +283,7 @@
     <Content Include="Views\Schema\Details.cshtml" />
     <Content Include="Views\Schema\Edit.cshtml" />
     <Content Include="Views\Schema\_GenerateSchema.cshtml" />
+    <Content Include="Views\Schema\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

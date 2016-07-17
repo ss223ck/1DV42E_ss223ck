@@ -20,7 +20,7 @@ namespace Schema.Domain.Repositories
             return _schemaApplicationEntities.WeekDays.AsQueryable();
         }
 
-        public IEnumerable<ActivitySummery> GetAllActivitySummeries(int userId)
+        public IEnumerable<ActivitySummery> GetAllActivitySummeries(string userId)
         {
             return _schemaApplicationEntities.ActivitySummeries.Where(x => x.UserId == userId).AsQueryable();
         }
@@ -37,7 +37,7 @@ namespace Schema.Domain.Repositories
         {
             return _schemaApplicationEntities.WeekDays.Find(id);
         }
-        public IEnumerable<WeekDay> GetUserSpecificWeekDayActivities(int userId)
+        public IEnumerable<WeekDay> GetUserSpecificWeekDayActivities(string userId)
         {
             IEnumerable<WeekDay> weekDays = _schemaApplicationEntities.WeekDays.AsQueryable();
 

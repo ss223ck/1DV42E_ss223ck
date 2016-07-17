@@ -80,7 +80,7 @@ namespace Schema_Application.Models.Factory
                 ActivityId = randomActivitySummeryViewModel.ActivityId,
                 ActivitySummeryId = randomActivitySummeryViewModel.ActivityId,
                 //Change userID
-                Userid = 1,
+                //Userid = 1,
                 Name = randomActivitySummeryViewModel.ActivityName,
                 Description = randomActivitySummeryViewModel.Description
             };

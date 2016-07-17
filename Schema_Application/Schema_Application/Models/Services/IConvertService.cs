@@ -9,7 +9,7 @@ namespace Schema_Application.Models.Services
 {
     public interface IConvertService
     {
-        List<WeekDayViewModel> GetWeekDayViewModels(int userID);
+        List<WeekDayViewModel> GetWeekDayViewModels(string userID);
         List<WeekDayViewModel> GetWeekDayViewModelsForPartial(int? counterID);
         ActivitySummeryViewModel GetActivityViewModel(int id);
 
@@ -17,9 +17,9 @@ namespace Schema_Application.Models.Services
 
         List<ActivityViewModel> GetActivityViewModels();
 
-        void CreateActivitySummery(ActivitySummeryViewModel activitySummeryViewModel);
+        void CreateActivitySummery(ActivitySummeryViewModel activitySummeryViewModel, string userID);
 
-        void CreateNewGeneratedSchema(List<WeekDayViewModel> weekDays, int userId);
-        List<WeekDayViewModel> GenerateSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel);
+        void CreateNewGeneratedSchema(List<WeekDayViewModel> weekDays, string userId);
+        List<WeekDayViewModel> GenerateSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel, string userID);
     }
 }

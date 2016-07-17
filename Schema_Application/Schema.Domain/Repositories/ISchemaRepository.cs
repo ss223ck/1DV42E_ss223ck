@@ -9,12 +9,12 @@ namespace Schema.Domain.Repositories
 {
     public interface ISchemaRepository : IDisposable
     {
-        IEnumerable<ActivitySummery> GetAllActivitySummeries(int userId);
+        IEnumerable<ActivitySummery> GetAllActivitySummeries(string userId);
         IEnumerable<Activity> GetAllActivities();
         Activity GetSpecificActivity(int id);
         ActivitySummery GetSpecificActivitySummery(int id);
         WeekDay GetSpecificWeekDay(int id);
-        IEnumerable<WeekDay> GetUserSpecificWeekDayActivities(int userId);
+        IEnumerable<WeekDay> GetUserSpecificWeekDayActivities(string userId);
         void CreateActivity(Activity activity);
         void CreateActivitySummery(ActivitySummery activitySummery);
         void UpdateActivity(Activity activity);

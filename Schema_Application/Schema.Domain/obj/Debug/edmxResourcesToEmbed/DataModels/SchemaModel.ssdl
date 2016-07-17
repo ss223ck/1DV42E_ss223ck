@@ -14,7 +14,7 @@
     <Property Name="ActivitySummeryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="WeekDayId" Type="int" Nullable="false" />
     <Property Name="ActivityId" Type="int" Nullable="false" />
-    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
     <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
     <Property Name="ActivityDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -60,7 +60,7 @@
   <Function Name="usp_AddActivitySummery" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema">
     <Parameter Name="ActivityId" Type="int" Mode="In" />
     <Parameter Name="WeekDayId" Type="int" Mode="In" />
-    <Parameter Name="UserId" Type="int" Mode="In" />
+    <Parameter Name="UserId" Type="nvarchar" Mode="In" />
     <Parameter Name="StartTime" Type="time" Mode="In" />
     <Parameter Name="EndTime" Type="time" Mode="In" />
     <Parameter Name="Description" Type="nvarchar" Mode="In" />
@@ -72,7 +72,9 @@
     <Parameter Name="ActivitySummeryId" Type="int" Mode="In" />
   </Function>
   <Function Name="usp_GetActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema" />
-  <Function Name="usp_GetActivitySummery" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema" />
+  <Function Name="usp_GetActivitySummery" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema">
+    <Parameter Name="UserID" Type="int" Mode="In" />
+  </Function>
   <Function Name="usp_GetSpecificActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="applicationSchema">
     <Parameter Name="ActivityID" Type="int" Mode="In" />
   </Function>
@@ -94,7 +96,7 @@
     <Parameter Name="ActivitySummeryId" Type="int" Mode="In" />
     <Parameter Name="ActivityId" Type="int" Mode="In" />
     <Parameter Name="WeekDayId" Type="int" Mode="In" />
-    <Parameter Name="UserId" Type="int" Mode="In" />
+    <Parameter Name="UserId" Type="nvarchar" Mode="In" />
     <Parameter Name="StartTime" Type="time" Mode="In" />
     <Parameter Name="EndTime" Type="time" Mode="In" />
     <Parameter Name="Description" Type="nvarchar" Mode="In" />

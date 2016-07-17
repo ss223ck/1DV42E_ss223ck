@@ -12,11 +12,11 @@ namespace Schema_Application.Models.Services
     public class ConvertService : IConvertService
     {
         ISchemaRepository _schemaRepository = new SchemaRepository();
-        public List<WeekDayViewModel> GetWeekDayViewModels(int userID)
+        public List<WeekDayViewModel> GetWeekDayViewModels(string userID)
         {
             //change _schemaRepository.GetUserSpecificWeekDayActivities(1); to the userID
             //Picks out schedule for specific user
-            IEnumerable<WeekDay> userWeekDays = _schemaRepository.GetUserSpecificWeekDayActivities(1);
+            IEnumerable<WeekDay> userWeekDays = _schemaRepository.GetUserSpecificWeekDayActivities(userID);
             List<WeekDayViewModel> viewModels = new List<WeekDayViewModel>(7);
             foreach (WeekDay model in userWeekDays)
             {
@@ -77,7 +77,7 @@ namespace Schema_Application.Models.Services
                 throw new NullReferenceException();
             }
         }
-        public void CreateActivitySummery(ActivitySummeryViewModel activitySummeryViewModel)
+        public void CreateActivitySummery(ActivitySummeryViewModel activitySummeryViewModel, string userId)
         {
             try
             {
@@ -85,8 +85,7 @@ namespace Schema_Application.Models.Services
                 {
                     ActivityId = activitySummeryViewModel.ActivityId,
                     WeekDayId = activitySummeryViewModel.WeekDayId,
-                    //ADD tempdata userId
-                    UserId = 1,
+                    UserId = userId,
                     StartTime = activitySummeryViewModel.StartTime,
                     EndTime = activitySummeryViewModel.EndTime,
                     ActivityDescription = activitySummeryViewModel.Description,
@@ -103,7 +102,7 @@ namespace Schema_Application.Models.Services
             }
         }
 
-        public void CreateNewGeneratedSchema(List<WeekDayViewModel> weekDays, int userId)
+        public void CreateNewGeneratedSchema(List<WeekDayViewModel> weekDays, string userId)
         {
             List<ActivitySummery> savedActivities = _schemaRepository.GetAllActivitySummeries(userId).ToList();
             foreach(ActivitySummery activitySummery in savedActivities)
@@ -121,8 +120,7 @@ namespace Schema_Application.Models.Services
                         {
                             ActivityId = activitySummeryViewModel.ActivityId,
                             WeekDayId = activitySummeryViewModel.WeekDayId,
-                            //Change userId
-                            UserId = 1,
+                            UserId = userId,
                             StartTime = activitySummeryViewModel.StartTime,
                             EndTime = activitySummeryViewModel.EndTime,
                             ActivityDescription = activitySummeryViewModel.Description,
@@ -143,11 +141,11 @@ namespace Schema_Application.Models.Services
         }
 
         #region Generate schema
-        public List<WeekDayViewModel> GenerateSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel)
+        public List<WeekDayViewModel> GenerateSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel, string userId)
         {
             //change null to right userId
-            SchemaGenerator schemaGenerator = new SchemaGenerator(GetWeekDayViewModelsForPartial(null), GetWeekDayViewModels(1));
-            return schemaGenerator.GenerateSchema(randomizeActivitySummeriesViewModel);
+            SchemaGenerator schemaGenerator = new SchemaGenerator(GetWeekDayViewModelsForPartial(null), GetWeekDayViewModels(userId));
+            return schemaGenerator.GenerateSchema(randomizeActivitySummeriesViewModel, userId);
         }
 
         #endregion

@@ -17,7 +17,7 @@ namespace Schema.Domain.DataModels
         public int ActivitySummeryId { get; set; }
         public int WeekDayId { get; set; }
         public int ActivityId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public System.TimeSpan StartTime { get; set; }
         public System.TimeSpan EndTime { get; set; }
         public string ActivityDescription { get; set; }
