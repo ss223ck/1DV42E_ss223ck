@@ -17,7 +17,9 @@ var application = {
         var activitySummeriesIndexCounter = htmlActivityElementsHolder.childElementCount;
 
         GetInformation.gatherRandomizeActivityView(activityId, activitySummeriesIndexCounter).done(function (response) {
-            jQuery("#activity-summeries-holder").html(htmlActivityElementsHolder.innerHTML + response);
+            var responseActivityHolder = document.createElement("div");
+            responseActivityHolder.innerHTML = response;
+            htmlActivityElementsHolder.appendChild(responseActivityHolder);
             var checkboxHolder = document.getElementById("[" + activitySummeriesIndexCounter + "]dayOfWeek-holder");
 
             //Need checkboxes for the activity to se which days that person is/not willing to do that activity
