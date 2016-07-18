@@ -11,12 +11,16 @@
             </div>
             @foreach (var activity in dayWeek.ActivitiySummeries)
             {
-                <div class="table-cell">
+                <div class="table-cell activity-bg-color-@activity.ActivityId">
                     <p>@Html.DisplayFor(Activities => activity.Name)</p>
                     <p>@Html.DisplayFor(Activities => activity.Description)</p>
                     <p>@Html.DisplayFor(Activities => activity.StartTime)-@Html.DisplayFor(Activities => activity.EndTime)</p>
                     @Html.ActionLink("Details", "Detail", new { id = activity.ActivitySummeryId })
-                    @Html.ActionLink("Delete", "Delete", new { id = activity.ActivitySummeryId })
+                    @if(activity.ActivitySummeryId != 0)
+                    {
+                        @Html.ActionLink("Delete", "Delete", new { id = activity.ActivitySummeryId })
+                    }
+                    
                 </div>
             }
         </div>

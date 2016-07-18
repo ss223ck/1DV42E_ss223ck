@@ -98,7 +98,7 @@ namespace Schema_Application.Models.Factory
             {
                 ActivityId = randomActivitySummeryViewModel.ActivityId,
                 ActivitySummeryId = 0,
-                Userid = userId,
+                UserId = userId,
                 Name = randomActivitySummeryViewModel.ActivityName,
                 Description = randomActivitySummeryViewModel.Description
             };
@@ -207,18 +207,20 @@ namespace Schema_Application.Models.Factory
             }
             else
             {
+                bool isActivityNotAdded = false;
                 for(int i = 0; i < specificDayList.Count(); i++)
                 {
-                    if(specificDayList.Count() == 1)
-                    {
-                        activitySummeryViewModel.StartTime = specificDayList[0].EndTime;
-                        activitySummeryViewModel.EndTime = activitySummeryViewModel.StartTime + new TimeSpan(1, 0, 0);
-                    }
-                        //Index out of range
-                    else if((specificDayList[i + 1].StartTime - specificDayList[i].EndTime) >= new TimeSpan(1, 20, 0))
+                    if(isActivityNotAdded && specificDayList.Count() == 1 || i == (specificDayList.Count() - 1))
                     {
                         activitySummeryViewModel.StartTime = specificDayList[i].EndTime;
                         activitySummeryViewModel.EndTime = activitySummeryViewModel.StartTime + new TimeSpan(1, 0, 0);
+                        isActivityNotAdded = true;
+                    }
+                    else if (isActivityNotAdded && (specificDayList[i + 1].StartTime - specificDayList[i].EndTime) >= new TimeSpan(1, 20, 0))
+                    {
+                        activitySummeryViewModel.StartTime = specificDayList[i].EndTime;
+                        activitySummeryViewModel.EndTime = activitySummeryViewModel.StartTime + new TimeSpan(1, 0, 0);
+                        isActivityNotAdded = true;
                     }
                 }
             }
@@ -264,7 +266,7 @@ namespace Schema_Application.Models.Factory
             {
                 ActivityId = 0,
                 ActivitySummeryId = 9,
-                Userid = userId,
+                UserId = userId,
                 Name = "Break",
                 Description = "Time to take a break",
                 StartTime = breakStartTime,

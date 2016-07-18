@@ -21,9 +21,9 @@ var GetInformation = {
             url: "/Schema/RandomizeActivitySummery/" + id + "?counter=" + counter
         });
     },
-    gatherSchema: function (id) {
+    gatherSchema: function () {
         return $.ajax({
-            url: "/Schema/GetActivitySummeries/" + id
+            url: "/Schema/GetActivitySummeries/"
         });
     },
     saveSchema: function () {

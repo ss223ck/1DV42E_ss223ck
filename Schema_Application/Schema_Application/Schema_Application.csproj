@@ -268,14 +268,11 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Schema\Show.cshtml" />
     <Content Include="Views\Schema\CreateSchema.cshtml" />
     <Content Include="Views\Schema\_ActivityDropdown.cshtml" />
     <Content Include="Views\Schema\_WeekDaysCheckBoxes.cshtml" />
     <Content Include="Views\Schema\_ShowSchema.cshtml" />
-    <Content Include="Views\Schema\Create.cshtml" />
     <Content Include="Views\Shared\_LayoutSchema.cshtml" />
-    <Content Include="Views\Schema\ViewSchema.cshtml" />
     <Content Include="Views\Schema\Index.cshtml" />
     <Content Include="Views\Schema\RandomizeSchema.cshtml" />
     <Content Include="Views\Schema\_RandomizeActivitySummery.cshtml" />

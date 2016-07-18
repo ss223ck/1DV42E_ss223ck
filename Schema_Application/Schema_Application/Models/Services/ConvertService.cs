@@ -193,5 +193,12 @@ namespace Schema_Application.Models.Services
                 throw new Exception("Something went wrong when trying to get activity view models");
             }
         }
+
+        public bool CheckIfActivitySummeryIdBelongsToUser(string userId, int activitySummeryId)
+        {
+            ActivitySummery activitySummery = _schemaRepository.GetSpecificActivitySummery(activitySummeryId);
+
+            return activitySummery.UserId == userId;
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace Schema_Application.ViewModels
         public int ActivitySummeryId { get; set; }
         public int ActivityId { get; set; }
         public int WeekDayId { get; set; }
-        public string Userid { get; set; }
+        public string UserId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public TimeSpan StartTime { get; set; }

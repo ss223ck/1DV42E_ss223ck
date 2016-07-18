@@ -21,5 +21,7 @@ namespace Schema_Application.Models.Services
 
         void CreateNewGeneratedSchema(List<WeekDayViewModel> weekDays, string userId);
         List<WeekDayViewModel> GenerateSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel, string userID);
+
+        bool CheckIfActivitySummeryIdBelongsToUser(string userId, int activitySummeryId);
     }
 }
