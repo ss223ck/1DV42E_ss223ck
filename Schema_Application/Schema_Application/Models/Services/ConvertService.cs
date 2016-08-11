@@ -14,7 +14,6 @@ namespace Schema_Application.Models.Services
         ISchemaRepository _schemaRepository = new SchemaRepository();
         public List<WeekDayViewModel> GetWeekDayViewModels(string userID)
         {
-            //change _schemaRepository.GetUserSpecificWeekDayActivities(1); to the userID
             //Picks out schedule for specific user
             IEnumerable<WeekDay> userWeekDays = _schemaRepository.GetUserSpecificWeekDayActivities(userID);
             List<WeekDayViewModel> viewModels = new List<WeekDayViewModel>(7);
@@ -95,23 +94,44 @@ namespace Schema_Application.Models.Services
                 _schemaRepository.CreateActivitySummery(activitySummery);
                 _schemaRepository.Save();
                 _schemaRepository.Dispose();
+                _schemaRepository = new SchemaRepository();
             }
             catch (Exception)
             {
                 throw new Exception("Something went wrong when trying to save the activity summery");
             }
         }
-
-        public void CreateNewGeneratedSchema(List<WeekDayViewModel> weekDays, string userId)
+        public void UpdateActivitySummery(ActivitySummeryViewModel activitySummeryViewModel)
         {
-            List<ActivitySummery> savedActivities = _schemaRepository.GetAllActivitySummeries(userId).ToList();
-            foreach(ActivitySummery activitySummery in savedActivities)
+            try
             {
-                _schemaRepository.DeleteActivitySummery(activitySummery.ActivitySummeryId);
+                ActivitySummery activitySummery = new ActivitySummery()
+                {
+                    ActivitySummeryId = activitySummeryViewModel.ActivitySummeryId,
+                    ActivityId = activitySummeryViewModel.ActivityId,
+                    WeekDayId = activitySummeryViewModel.WeekDayId,
+                    UserId = activitySummeryViewModel.UserId,
+                    StartTime = activitySummeryViewModel.StartTime,
+                    EndTime = activitySummeryViewModel.EndTime,
+                    ActivityDescription = activitySummeryViewModel.Description,
+                    Activity = _schemaRepository.GetSpecificActivity(activitySummeryViewModel.ActivityId),
+                    WeekDay = _schemaRepository.GetSpecificWeekDay(activitySummeryViewModel.WeekDayId)
+                };
+                _schemaRepository.UpdateActivitySummery(activitySummery);
+                _schemaRepository.Save();
+                _schemaRepository.Dispose();
+                _schemaRepository = new SchemaRepository();
             }
-
+            catch (Exception)
+            {
+                throw new Exception("Something went wrong when trying to save the activity summery");
+            }
+        }
+        public void CreateNewGeneratedSchema(List<WeekDayViewModel> weekDays, string userId)
+        {   
             foreach (WeekDayViewModel weekDay in weekDays)
             {
+                weekDay.ActivitiySummeries = weekDay.ActivitiySummeries.Where(x => x.ActivitySummeryId == 0).ToList();
                 foreach (ActivitySummeryViewModel activitySummeryViewModel in weekDay.ActivitiySummeries)
                 {
                     try

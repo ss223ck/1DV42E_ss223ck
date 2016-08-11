@@ -1,6 +1,7 @@
 ﻿using Schema.Domain.DataModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,9 +59,13 @@ namespace Schema.Domain.Repositories
             _schemaApplicationEntities.ActivitySummeries.Add(activitySummery);
         }
 
-        public void UpdateActivity(Activity activity)
+        public void UpdateActivitySummery(ActivitySummery activitySummery)
         {
-            throw new NotImplementedException();
+            if (_schemaApplicationEntities.Entry(activitySummery).State == EntityState.Detached)
+            {
+                _schemaApplicationEntities.ActivitySummeries.Attach(activitySummery);
+            }
+            _schemaApplicationEntities.Entry(activitySummery).State = EntityState.Modified;
         }
 
         public void DeleteActivity(int id)

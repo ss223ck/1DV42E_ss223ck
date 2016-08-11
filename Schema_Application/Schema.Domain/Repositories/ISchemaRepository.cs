@@ -17,7 +17,7 @@ namespace Schema.Domain.Repositories
         IEnumerable<WeekDay> GetUserSpecificWeekDayActivities(string userId);
         void CreateActivity(Activity activity);
         void CreateActivitySummery(ActivitySummery activitySummery);
-        void UpdateActivity(Activity activity);
+        void UpdateActivitySummery(ActivitySummery activitySummery);
         void DeleteActivity(int id);
         void DeleteActivitySummery(int id);
         IEnumerable<WeekDay> GetAllWeekDays();

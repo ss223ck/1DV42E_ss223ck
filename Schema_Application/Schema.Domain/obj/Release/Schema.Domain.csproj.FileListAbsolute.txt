@@ -1,0 +1,9 @@
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema.Domain\bin\Release\Schema.Domain.dll.config
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema.Domain\bin\Release\Schema.Domain.dll
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema.Domain\bin\Release\Schema.Domain.pdb
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema.Domain\bin\Release\EntityFramework.dll
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema.Domain\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema.Domain\bin\Release\EntityFramework.xml
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema.Domain\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema.Domain\obj\Release\Schema.Domain.dll
+C:\Users\User\Documents\GitHub\1DV42E_ss223ck\Schema_Application\Schema.Domain\obj\Release\Schema.Domain.pdb

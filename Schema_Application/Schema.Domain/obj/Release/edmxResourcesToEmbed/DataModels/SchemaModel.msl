@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="WP14_ss223ck_SchemaApplicationModelStoreContainer" CdmEntityContainer="SchemaApplicationEntities">
+    <EntitySetMapping Name="Activities">
+      <EntityTypeMapping TypeName="WP14_ss223ck_SchemaApplicationModel.Activity">
+        <MappingFragment StoreEntitySet="Activity">
+          <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+          <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ActivitySummeries">
+      <EntityTypeMapping TypeName="WP14_ss223ck_SchemaApplicationModel.ActivitySummery">
+        <MappingFragment StoreEntitySet="ActivitySummery">
+          <ScalarProperty Name="ActivitySummeryId" ColumnName="ActivitySummeryId" />
+          <ScalarProperty Name="WeekDayId" ColumnName="WeekDayId" />
+          <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="ActivityDescription" ColumnName="ActivityDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="WP14_ss223ck_SchemaApplicationModel.ActivitySummery">
+        <ModificationFunctionMapping>
+          <InsertFunction FunctionName="WP14_ss223ck_SchemaApplicationModel.Store.usp_AddActivitySummery">
+            <ScalarProperty Name="ActivityDescription" ParameterName="Description" />
+            <ScalarProperty Name="EndTime" ParameterName="EndTime" />
+            <ScalarProperty Name="StartTime" ParameterName="StartTime" />
+            <ScalarProperty Name="UserId" ParameterName="UserId" />
+            <ScalarProperty Name="WeekDayId" ParameterName="WeekDayId" />
+            <ScalarProperty Name="ActivityId" ParameterName="ActivityId" />
+          </InsertFunction>
+          <UpdateFunction FunctionName="WP14_ss223ck_SchemaApplicationModel.Store.usp_UpdateActivitySummery">
+            <ScalarProperty Name="ActivityDescription" ParameterName="Description" Version="Current" />
+            <ScalarProperty Name="EndTime" ParameterName="EndTime" Version="Current" />
+            <ScalarProperty Name="StartTime" ParameterName="StartTime" Version="Current" />
+            <ScalarProperty Name="UserId" ParameterName="UserId" Version="Current" />
+            <ScalarProperty Name="WeekDayId" ParameterName="WeekDayId" Version="Current" />
+            <ScalarProperty Name="ActivityId" ParameterName="ActivityId" Version="Current" />
+            <ScalarProperty Name="ActivitySummeryId" ParameterName="ActivitySummeryId" Version="Current" />
+          </UpdateFunction>
+          <DeleteFunction FunctionName="WP14_ss223ck_SchemaApplicationModel.Store.usp_DeleteActivitySummery">
+            <ScalarProperty Name="ActivitySummeryId" ParameterName="ActivitySummeryId" />
+          </DeleteFunction>
+        </ModificationFunctionMapping>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WeekDays">
+      <EntityTypeMapping TypeName="WP14_ss223ck_SchemaApplicationModel.WeekDay">
+        <MappingFragment StoreEntitySet="WeekDay">
+          <ScalarProperty Name="WeekDayId" ColumnName="WeekDayId" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="usp_GetUserActivitySummery" FunctionName="WP14_ss223ck_SchemaApplicationModel.Store.usp_GetUserActivitySummery">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WP14_ss223ck_SchemaApplicationModel.usp_GetUserActivitySummery_Result">
+          <ScalarProperty Name="ActivitySummeryId" ColumnName="ActivitySummeryId" />
+          <ScalarProperty Name="WeekDayId" ColumnName="WeekDayId" />
+          <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="ActivityDescription" ColumnName="ActivityDescription" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -182,13 +182,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Factory\ITimesADay.cs" />
-    <Compile Include="Models\Factory\IWhenAcktivity.cs" />
-    <Compile Include="Models\Factory\OnlyOnePerDay.cs" />
-    <Compile Include="Models\Factory\RulesFactory.cs" />
     <Compile Include="Models\Factory\SchemaGenerator.cs" />
-    <Compile Include="Models\Factory\TempLogic.cs" />
-    <Compile Include="Models\Factory\WhenActivity.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Services\ConvertService.cs" />
     <Compile Include="Models\Services\IConvertService.cs" />
@@ -197,7 +191,6 @@
     <Compile Include="ViewModels\ActivitySummeryViewModel.cs" />
     <Compile Include="ViewModels\ActivityViewModel.cs" />
     <Compile Include="ViewModels\RandomizeActivitySummeriesViewModel.cs" />
-    <Compile Include="ViewModels\RandomizeSchemaViewModel.cs" />
     <Compile Include="ViewModels\WeekDayViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +198,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\icon\black-exit.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -217,6 +211,8 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="ClassDiagramSchema.cd" />
+    <None Include="Properties\PublishProfiles\ss223ck.pubxml" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\AppSpecificScripts\get-information.js" />
     <Content Include="Scripts\AppSpecificScripts\create-schema.js" />
@@ -239,7 +235,9 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -281,6 +279,7 @@
     <Content Include="Views\Schema\Edit.cshtml" />
     <Content Include="Views\Schema\_GenerateSchema.cshtml" />
     <Content Include="Views\Schema\Delete.cshtml" />
+    <Content Include="Views\Schema\_ErrorModelStateIsNotValid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

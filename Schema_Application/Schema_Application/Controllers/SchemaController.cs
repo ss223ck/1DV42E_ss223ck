@@ -29,13 +29,20 @@ namespace Schema_Application.Controllers
         #region Index
         public ActionResult Index()
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                return View("Index", _convertService.GetWeekDayViewModels(User.Identity.GetUserId())); 
+                if (User.Identity.IsAuthenticated)
+                {
+                    return View("Index", _convertService.GetWeekDayViewModels(User.Identity.GetUserId()));
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
             }
-            else
+            catch (Exception)
             {
-                return RedirectToAction("Login", "Account");
+                return View("Error");
             }
         }
 
@@ -44,37 +51,44 @@ namespace Schema_Application.Controllers
         #region Details
         public ActionResult Detail(int? id)
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                if (id.HasValue)
+                if (User.Identity.IsAuthenticated)
                 {
-                    try
+                    if (id.HasValue)
                     {
-                        if (_convertService.CheckIfActivitySummeryIdBelongsToUser(User.Identity.GetUserId(), (int)id))
+                        try
                         {
-                            return View("Details", _convertService.GetActivityViewModel((int)id)); 
+                            if (_convertService.CheckIfActivitySummeryIdBelongsToUser(User.Identity.GetUserId(), (int)id))
+                            {
+                                return View("Details", _convertService.GetActivityViewModel((int)id));
+                            }
+                            else
+                            {
+                                TempData["errorMessage"] = "You tried to access a activity that you don't own";
+                                return RedirectToAction("index");
+                            }
                         }
-                        else
+                        catch (Exception)
                         {
-                            TempData["errorMessage"] = "You tried to access a activity that you don't own";
-                            return RedirectToAction("index");
+                            TempData["ErrorMessage"] = "Something went wrong when trying to show the specific activity";
+                            return RedirectToAction("Index");
                         }
                     }
-                    catch (Exception)
+                    else
                     {
-                        TempData["ErrorMessage"] = "Something went wrong when trying to show the specific activity";
+                        TempData["ErrorMessage"] = "Something went wrong when trying to show a specific activity, try again!";
                         return RedirectToAction("Index");
                     }
                 }
                 else
                 {
-                    TempData["ErrorMessage"] = "Something went wrong when trying to show a specific activity, try again!";
-                    return RedirectToAction("Index");
-                } 
+                    return RedirectToAction("Login", "Account");
+                }
             }
-            else
+            catch (Exception)
             {
-                return RedirectToAction("Login", "Account");
+                return View("Error");
             }
         }
 
@@ -84,76 +98,94 @@ namespace Schema_Application.Controllers
 
         public ActionResult Edit(int? id)
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                if (id.HasValue)
+                if (User.Identity.IsAuthenticated)
                 {
-                    try
+                    if (id.HasValue)
                     {
-                        
-                        if (_convertService.CheckIfActivitySummeryIdBelongsToUser(User.Identity.GetUserId(), (int)id))
+                        try
                         {
-                            return View("Edit", _convertService.GetActivityViewModel((int)id));
-                        }
-                        else
-                        {
-                            TempData["errorMessage"] = "You tried to access a activity that you don't own";
-                            return RedirectToAction("index");
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        TempData["ErrorMessage"] = "Something went wrong when trying to edit the specific activity";
-                        return RedirectToAction("Index");
-                    }
-                }
-                else
-                {
-                    TempData["ErrorMessage"] = "Something went wrong when trying to edit a specific activity, try again!";
-                    return RedirectToAction("Index");
-                }
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
-            
-        }
-        public ActionResult Edit([Bind(Include = "ActivitySummeryId, ActivityId, WeekDayId, Userid, Name, Description, StartTime, EndTime")]ActivitySummeryViewModel activitySummeryViewModel)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                if (activitySummeryViewModel != null)
-                {
-                    try
-                    {
 
-                        if (activitySummeryViewModel.UserId == User.Identity.GetUserId())
-                        {
-                            TempData["successMessage"] = "You changed the activity";
-                            return RedirectToAction("index");
+                            if (_convertService.CheckIfActivitySummeryIdBelongsToUser(User.Identity.GetUserId(), (int)id))
+                            {
+                                return View("Edit", _convertService.GetActivityViewModel((int)id));
+                            }
+                            else
+                            {
+                                TempData["errorMessage"] = "You tried to access a activity that you don't own";
+                                return RedirectToAction("index");
+                            }
                         }
-                        else
+                        catch (Exception)
                         {
-                            TempData["errorMessage"] = "You tried to change userId which is not allowed";
-                            return RedirectToAction("index");
+                            TempData["ErrorMessage"] = "Something went wrong when trying to edit the specific activity";
+                            return RedirectToAction("Index");
                         }
                     }
-                    catch (Exception)
+                    else
                     {
-                        TempData["ErrorMessage"] = "Something went wrong when trying to edit the specific activity";
+                        TempData["ErrorMessage"] = "Something went wrong when trying to edit a specific activity, try again!";
                         return RedirectToAction("Index");
                     }
                 }
                 else
                 {
-                    TempData["ErrorMessage"] = "Something went wrong when trying to edit a specific activity, try again!";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Login", "Account");
                 }
+            }
+            catch (Exception)
+            {
+                return View("Error");
+            }
+        }
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "ActivitySummeryId, ActivityId, WeekDayId, Name, Description, StartTime, EndTime")]ActivitySummeryViewModel activitySummeryViewModel)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                if (User.Identity.IsAuthenticated)
+                {
+                    if (activitySummeryViewModel != null)
+                    {
+                        try
+                        {
+
+                            if (_convertService.CheckIfActivitySummeryIdBelongsToUser(User.Identity.GetUserId(), activitySummeryViewModel.ActivitySummeryId))
+                            {
+                                activitySummeryViewModel.UserId = User.Identity.GetUserId();
+                                _convertService.UpdateActivitySummery(activitySummeryViewModel);
+                                TempData["successMessage"] = "You changed the activity";
+                                return RedirectToAction("index");
+                            }
+                            else
+                            {
+                                TempData["errorMessage"] = "You tried to change userId which is not allowed";
+                                return RedirectToAction("index");
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            TempData["ErrorMessage"] = "Something went wrong when trying to edit the specific activity";
+                            return RedirectToAction("Index");
+                        }
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Something went wrong when trying to edit a specific activity, try again!";
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                } 
             }
             else
             {
-                return RedirectToAction("Login", "Account");
+                return View("Edit");
             }
 
         }
@@ -162,16 +194,64 @@ namespace Schema_Application.Controllers
         #region DeleteSchema
         public ActionResult Delete(int? id)
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                if (id.HasValue)
+                if (User.Identity.IsAuthenticated)
+                {
+                    if (id.HasValue)
+                    {
+                        try
+                        {
+
+                            if (_convertService.CheckIfActivitySummeryIdBelongsToUser(User.Identity.GetUserId(), (int)id))
+                            {
+                                return View("Delete", _convertService.GetActivityViewModel((int)id));
+                            }
+                            else
+                            {
+                                TempData["errorMessage"] = "You tried to access a activity that you don't own";
+                                return RedirectToAction("index");
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            TempData["ErrorMessage"] = "Something went wrong when getting the specific activity";
+                            return RedirectToAction("Index");
+                        }
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Something went wrong when getting the specific activity, try again!";
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
+            catch (Exception)
+            {
+                return View("Error");
+            }
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                if (User.Identity.IsAuthenticated)
                 {
                     try
                     {
-                        
                         if (_convertService.CheckIfActivitySummeryIdBelongsToUser(User.Identity.GetUserId(), (int)id))
                         {
-                            return View("Delete", _convertService.GetActivityViewModel((int)id));
+                            _schemaRepository.DeleteActivitySummery((int)id);
+                            _schemaRepository.Save();
+                            TempData["successMessage"] = "You deleted the activity";
+                            return RedirectToAction("index");
                         }
                         else
                         {
@@ -181,53 +261,18 @@ namespace Schema_Application.Controllers
                     }
                     catch (Exception)
                     {
-                        TempData["ErrorMessage"] = "Something went wrong when getting the specific activity";
-                        return RedirectToAction("Index");
+                        TempData["errorMessage"] = "Something went wrong when the activity was sopposed to be deleted, try again!";
+                        return RedirectToAction("index");
                     }
                 }
                 else
                 {
-                    TempData["ErrorMessage"] = "Something went wrong when getting the specific activity, try again!";
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return RedirectToAction("Login", "Account");
                 }
             }
-            else
+            catch (Exception)
             {
-                return RedirectToAction("Login", "Account");
-            }
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                
-                try
-                {
-                    if (_convertService.CheckIfActivitySummeryIdBelongsToUser(User.Identity.GetUserId(), (int)id))
-                    {
-                        _schemaRepository.DeleteActivitySummery((int)id);
-                        _schemaRepository.Save();
-                        TempData["successMessage"] = "You deleted the activity";
-                        return RedirectToAction("index");
-                    }
-                    else
-                    {
-                        TempData["errorMessage"] = "You tried to access a activity that you don't own";
-                        return RedirectToAction("index");
-                    }
-                }
-                catch (Exception)
-                {
-                    TempData["errorMessage"] = "Something went wrong when the activity was sopposed to be deleted, try again!";
-                    return RedirectToAction("index");
-                } 
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
+                return View("Error");
             }
         }
 
@@ -235,43 +280,57 @@ namespace Schema_Application.Controllers
         #region CreateSchema
         public ActionResult CreateSchema()
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                return View(); 
+                if (User.Identity.IsAuthenticated)
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
             }
-            else
+            catch (Exception)
             {
-                return RedirectToAction("Login", "Account");
+                return View("Error");
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateSchema([Bind(Include = "ActivitySummeryId, ActivityId, WeekDayId, UserId, Name, Description, StartTime, EndTime")]ActivitySummeryViewModel activitySummeryViewModel)
+        public ActionResult CreateSchema([Bind(Include = "ActivityId, WeekDayId, Name, Description, StartTime, EndTime")]ActivitySummeryViewModel activitySummeryViewModel)
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                if (ModelState.IsValid)
+                if (User.Identity.IsAuthenticated)
                 {
-                    try
+                    if (ModelState.IsValid)
                     {
-                        activitySummeryViewModel.UserId = User.Identity.GetUserId();
-                        _convertService.CreateActivitySummery(activitySummeryViewModel, User.Identity.GetUserId());
-                        return PartialView("_ShowSchema", _convertService.GetWeekDayViewModels(User.Identity.GetUserId())); 
+                        try
+                        {
+                            activitySummeryViewModel.UserId = User.Identity.GetUserId();
+                            _convertService.CreateActivitySummery(activitySummeryViewModel, User.Identity.GetUserId());
+                            return PartialView("_ShowSchema", _convertService.GetWeekDayViewModels(User.Identity.GetUserId()));
 
+                        }
+                        catch (Exception)
+                        {
+                            TempData["ErrorMessage"] = "Something went wrong when trying to create a schema";
+                            return RedirectToAction("Index");
+                        }
                     }
-                    catch (Exception)
-                    {
-                        TempData["ErrorMessage"] = "Something went wrong when trying to create a schema";
-                        return RedirectToAction("Index");
-                    }
+                    TempData["ErrorMessage"] = "Something is wrong with the information sent to the server. Please try again!";
+                    return PartialView("_CreateSchema");
                 }
-                TempData["ErrorMessage"] = "Something is wrong with the information sent to the server. Please try again!";
-                return PartialView("_CreateSchema");  
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
             }
-            else
+            catch (Exception)
             {
-                return RedirectToAction("Login", "Account");
+                return View("Error");
             }
         }
 
@@ -280,37 +339,51 @@ namespace Schema_Application.Controllers
         #region RandomizeSchema
         public ActionResult RandomizeSchema()
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                return View("RandomizeSchema"); 
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult RandomizeSchema(List<WeekDayViewModel> WeekDaysViewModel)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                var weekDays = (List<WeekDayViewModel>)TempData["RandomizedSchema"];
-                if (weekDays != null)
+                if (User.Identity.IsAuthenticated)
                 {
-                    _convertService.CreateNewGeneratedSchema(weekDays, User.Identity.GetUserId());
+                    return View("RandomizeSchema");
                 }
                 else
                 {
-
+                    return RedirectToAction("Login", "Account");
                 }
-                TempData["SuccessMessage"] = "The schema is saved";
-                return Redirect("Index"); 
             }
-            else
+            catch (Exception)
             {
-                return RedirectToAction("Login", "Account");
+                return View("Error");
+            }
+        }
+
+        [HttpPost, ActionName("RandomizeSchema")]
+        [ValidateAntiForgeryToken]
+        public ActionResult RandomizeSchema(int? id)
+        {
+            try
+            {
+                if (User.Identity.IsAuthenticated)
+                {
+                    var weekDays = (List<WeekDayViewModel>)TempData["RandomizedSchema"];
+                    if (weekDays != null)
+                    {
+                        _convertService.CreateNewGeneratedSchema(weekDays, User.Identity.GetUserId());
+                    }
+                    else
+                    {
+
+                    }
+                    TempData["SuccessMessage"] = "The schema is saved";
+                    return Redirect("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
+            catch (Exception)
+            {
+                return View("Error");
             }
         }
         #endregion
@@ -318,19 +391,21 @@ namespace Schema_Application.Controllers
         #region partialviews
         public ActionResult RandomizeActivitySummery(int? id, int counter)
         {
-            if(id.HasValue)
+            try
             {
-                try
+                if (id.HasValue)
                 {
                     return PartialView("_RandomizeActivitySummery", _convertService.GetRandomizeActivitySummeryViewModel((int)id, counter));
                 }
-                catch (Exception)
+                else
                 {
-                    TempData["ErrorMessage"] = "Something went wrong when geting the activity summery";
-                    return RedirectToAction("Index");
+                    return View("Error");
                 }
             }
-            return PartialView("_RandomizeActivitySummery", new RandomizeActivitySummeriesViewModel(){ActivityId = id.Value});
+            catch (Exception)
+            {
+                return View("Error");
+            }
         }
 
         public ActionResult GetActivitySummeries()
@@ -349,8 +424,8 @@ namespace Schema_Application.Controllers
             catch (Exception)
             {
                 TempData["ErrorMessage"] = "Something went wrong when trying to get det activities";
+                return View("Error");
             }
-            return null;
         }
 
         public ActionResult GetActivities()
@@ -361,22 +436,27 @@ namespace Schema_Application.Controllers
             } catch(Exception)
             {
                 TempData["ErrorMessage"] = "Something went wrong when trying to get det activities";
+                return View("Error");
             }
-            return null;
         }
         public ActionResult GetWeekDaysCheckboxes(int? counterID)
         {
-            if(counterID.HasValue)
+            
+            try
             {
-                try
+                if (counterID.HasValue)
                 {
-                    return PartialView("_WeekDaysCheckBoxes", _convertService.GetWeekDayViewModelsForPartial((int)counterID).AsEnumerable());
-                } catch(Exception)
-                {
-                    TempData["ErrorMessage"] = "Something went wrong when trying to get the checkboxes";
+                    return PartialView("_WeekDaysCheckBoxes", _convertService.GetWeekDayViewModelsForPartial((int)counterID).AsEnumerable()); 
                 }
+                else
+                {
+                    return View("Error");
+                }
+            } catch(Exception)
+            {
+                TempData["ErrorMessage"] = "Something went wrong when trying to get the checkboxes";
+                return View("Error");
             }
-            return null;
         }
         public ActionResult GetWeekDaysRadioButtons()
         {
@@ -387,18 +467,32 @@ namespace Schema_Application.Controllers
             catch (Exception)
             {
                 TempData["ErrorMessage"] = "Something went wrong when trying to get the checkboxes";
+                return View("Error");
             }
-            return null;
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult GenerateSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel)
+        public ActionResult GenerateSchema([Bind(Include = "ActivityId, WeekDayId, ActivityTimesCountsInWeek, ActivityName, CountIndex, Description, ActivityTime")]List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel)
         {
-            var returnvalues = _convertService.GenerateSchema(randomizeActivitySummeriesViewModel, User.Identity.GetUserId());
-            TempData["RandomizedSchema"] = returnvalues;
+            try
+            {
+                if (ModelState.IsValid && randomizeActivitySummeriesViewModel != null)
+                {
+                    var returnvalues = _convertService.GenerateSchema(randomizeActivitySummeriesViewModel, User.Identity.GetUserId());
+                    TempData["RandomizedSchema"] = returnvalues;
 
-            return PartialView("_ShowSchema", returnvalues);
+                    return PartialView("_ShowSchema", returnvalues); 
+                }
+                else
+                {
+                    return View("_ErrorModelStateIsNotValid");
+                }
+            }
+            catch (Exception)
+            {
+                return View("Error");
+            }
         }
 
         #endregion

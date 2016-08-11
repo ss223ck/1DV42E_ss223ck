@@ -1,0 +1,22 @@
+﻿@{
+    var ajaxOptions = new AjaxOptions
+    {
+        UpdateTargetId = "schema-container"
+    };
+}
+<div class="information-container" id="activity-group-container">
+    @using (Ajax.BeginForm("GenerateSchema", ajaxOptions))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group" id="generate-schema-container">
+            <div class="text-information-holder">
+                <p class="lead">Press the button when you are done adding activities to your future schema and the schema will be generated</p>
+            </div>
+
+            <input type="submit" id="generateSchema" class="btn btn-default" value="Generate schema!" />
+        </div>
+        <div id="activity-summeries-holder">
+        </div>
+    }
+</div>

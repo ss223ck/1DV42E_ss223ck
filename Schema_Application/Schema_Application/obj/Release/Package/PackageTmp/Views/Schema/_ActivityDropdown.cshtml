@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Schema_Application.ViewModels.ActivityViewModel>
+
+<select id="activityDropdown" name="ActivityId" class="form-control">
+    @foreach (var activity in Model)
+    {
+        <option value="@activity.ActivityId">
+            @activity.Name
+        </option>
+    }
+</select>

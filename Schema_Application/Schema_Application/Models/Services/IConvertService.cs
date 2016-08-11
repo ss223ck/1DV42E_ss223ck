@@ -19,6 +19,8 @@ namespace Schema_Application.Models.Services
 
         void CreateActivitySummery(ActivitySummeryViewModel activitySummeryViewModel, string userID);
 
+        void UpdateActivitySummery(ActivitySummeryViewModel activitySummeryViewModel);
+
         void CreateNewGeneratedSchema(List<WeekDayViewModel> weekDays, string userId);
         List<WeekDayViewModel> GenerateSchema(List<RandomizeActivitySummeriesViewModel> randomizeActivitySummeriesViewModel, string userID);
 

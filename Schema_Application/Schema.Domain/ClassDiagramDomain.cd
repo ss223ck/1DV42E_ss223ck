@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Schema.Domain.DataModels.SchemaApplicationEntities">
+    <Position X="7.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAIAAAAAAAEAAAAAAAAAIAAIAAAAA=</HashCode>
+      <FileName>DataModels\SchemaModel.Context.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Schema.Domain.DataModels.Activity">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAIAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>DataModels\Activity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Schema.Domain.DataModels.ActivitySummery">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAEAAAgAAAAgAIABgAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>DataModels\ActivitySummery.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Schema.Domain.DataModels.WeekDay">
+    <Position X="11.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAIgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModels\WeekDay.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Schema.Domain.Repositories.SchemaRepository" BaseTypeListCollapsed="true">
+    <Position X="3" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAFIAAICBAAAEAAAAAABAAAAAgAYAAAIAABAAAASA=</HashCode>
+      <FileName>Repositories\SchemaRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="Schema.Domain.Repositories.ISchemaRepository">
+    <Position X="4.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAFIAAIABAAAEAAAAAABAAAAAgAYAAAIAABAAAAQA=</HashCode>
+      <FileName>Repositories\ISchemaRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

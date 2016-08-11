@@ -264,8 +264,8 @@ namespace Schema_Application.Models.Factory
         {
             ActivitySummeryViewModel breakInActivitySummery = new ActivitySummeryViewModel()
             {
-                ActivityId = 0,
-                ActivitySummeryId = 9,
+                ActivityId = 9,
+                ActivitySummeryId = 0,
                 UserId = userId,
                 Name = "Break",
                 Description = "Time to take a break",
